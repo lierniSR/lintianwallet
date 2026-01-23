@@ -16,6 +16,10 @@
         <option value="en">English</option>
         <option value="fr">Frances</option>
         <option value="eu">Euskera</option>
+        <option value="pt">Portugues</option>
+        <option value="it">Italiano</option>
+        <option value="zh-TW">Chino</option>
+        <option value="ja">Japones</option>
     </select>
     <div class="flex flex-col items-center justify-center h-screen bg-white rounded-xl">
         <h1 class="text-4xl font-bold text-black" id="titulo">INICIAR SESIÓN</h1>
