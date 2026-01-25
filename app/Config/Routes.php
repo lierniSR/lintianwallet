@@ -11,6 +11,14 @@ $routes->get('/', 'Home::index');
  * Login y registro
  */
 $routes->get('/login', 'C_Login::index');
+$routes->post('/login', 'C_Login::index');
+$routes->post('/registro', 'C_Login::registroIndex');
+
+
+/**
+ * Modo Desarrollo
+ */
+$routes->get('/registro', 'C_Login::registroIndex');
 
 /**
  * Traducciones

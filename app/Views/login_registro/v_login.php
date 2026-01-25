@@ -10,7 +10,7 @@
 
 </head>
 
-<body class="relative min-h-screen bg-gradient-to-b from-purple-600 via-purple-700 to-blue-900 p-10">
+<body class="relative min-h-screen bg-gradient-to-b from-purple-600 via-purple-700 to-blue-900 p-10 flex flex-col items-center justify-center">
     <!-- Select para los idiomas -->
     <select id="selectIdioma" class="p-2 rounded border border-gray-300 bg-white mb-5">
         <option value="es">Español</option>
@@ -23,14 +23,17 @@
         <option value="ja">Japones</option>
     </select>
     <!-- Div padre -->
-    <div class="grid grid-cols-[1fr_auto_1fr] items-center justify-center h-screen bg-white rounded-xl">
+    <div class="grid grid-cols-[1fr_auto_1fr] items-center justify-center h-auto p-10 bg-white rounded-xl shadow-2xl">
         <!-- Div izquierdo -->
         <div class="flex flex-col items-center justify-center col-span-1 p-5">
             <h1 id="tituloApp" class="text-4xl font-bold text-center"></h1>
             <img src="img/logo.png" alt="Logo" class="w-72 h-72">
             <p id="eslogan" class="text-center"></p>
+
+            <?= form_open('/registro') ?>
             <button id="botonRegistro" class="px-6 py-2 rounded-full bg-[#29C6AD] mt-5 text-white font-bold hover:bg-[#23a893] transition duration-300 shadow-lg">
             </button>
+            <?= form_close() ?>
         </div>
         <!-- Div medio -->
         <div class="h-3/4 w-1 bg-[#29C6AD] self-center"></div>
@@ -39,19 +42,41 @@
             <h1 class="text-4xl font-bold text-center" id="titulo"></h1>
             <div class="flex flex-col items-center justify-center">
                 <!--Formulario para inciar sesión -->
-                <form class="flex flex-col gap-4 w-full max-w-sm mt-5">
-                    <div class="flex flex-col">
-                        <label for="dni" class="text-sm font-semibold" id="dniLabel"></label>
-                        <input type="text" id="dni" name="dni" required placeholder="Ej. 12345678A" class="w-100 p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-purple-600">
-                    </div>
-                    <div class="flex flex-col">
-                        <label for="password" class="text-sm font-semibold" id="passwordLabel"></label>
-                        <input type="password" name="password" id="password" required placeholder="Ej. ****" class="w-100 p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-purple-600">
-                    </div>
-                    <div class="flex flex-col items-center justify-center">
-                        <input type="submit" id="botonInicio" value="INICIAR SESION" class="w-50 px-6 py-2 rounded-full bg-[#29C6AD] mt-5 mb-5 text-white font-bold hover:bg-[#23a893] transition duration-300 shadow-lg">
-                    </div>
-                </form>
+                <?= form_open('/autenticar', ['class' => 'flex flex-col gap-4 w-full max-w-sm mt-5']) ?>
+
+                <div class="flex flex-col">
+                    <?= form_label('', 'dni', ['class' => 'text-sm font-semibold', 'id' => 'dniLabel']) ?>
+
+                    <?= form_input([
+                        'type'        => 'text',
+                        'name'        => 'dni',
+                        'id'          => 'dni',
+                        'required'    => true,
+                        'placeholder' => 'Ej. 12345678A',
+                        'class'       => 'w-100 p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-purple-600'
+                    ]) ?>
+                </div>
+
+                <div class="flex flex-col">
+                    <?= form_label('', 'password', ['class' => 'text-sm font-semibold', 'id' => 'passwordLabel']) ?>
+
+                    <?= form_password([
+                        'name'        => 'password',
+                        'id'          => 'password',
+                        'required'    => true,
+                        'placeholder' => 'Ej. ****',
+                        'class'       => 'w-100 p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-purple-600'
+                    ]) ?>
+                </div>
+
+                <div class="flex flex-col items-center justify-center">
+                    <?= form_submit('botonInicio', 'INICIAR SESION', [
+                        'id'    => 'botonInicio',
+                        'class' => 'w-50 px-6 py-2 rounded-full bg-[#29C6AD] mt-5 mb-5 text-white font-bold hover:bg-[#23a893] transition duration-300 shadow-lg'
+                    ]) ?>
+                </div>
+
+                <?= form_close() ?>
             </div>
         </div>
     </div>

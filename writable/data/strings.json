@@ -5,6 +5,10 @@
         "textoBotonRegistro": "REGISTRARSE",
         "tituloApp": "LintianWallet",
         "dni": "DNI",
+        "nombre": "Nombre",
+        "apellido": "Apellido",
+        "gmail": "Gmail",
+        "fotoPerfil": "Foto de perfil",
         "contrasenia": "Contraseña"
     },
     "eu": {
@@ -13,6 +17,10 @@
         "textoBotonRegistro": "ERREGISTRATU",
         "tituloApp": "LintianWallet",
         "dni": "NAN",
+        "nombre": "Izena",
+        "apellido": "Abizena",
+        "gmail": "Gmail-a",
+        "fotoPerfil": "Perfileko argakia",
         "contrasenia": "Pasahitza"
     }
 }
