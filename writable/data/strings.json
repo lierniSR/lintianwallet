@@ -1,8 +1,14 @@
 {
     "es": {
-        "tituloLogin": "INICIAR SESION"
+        "tituloLogin": "INICIAR SESION",
+        "eslogan": "Menos likes a las compras, más a tu bolsillo, !<b>LintianWallet</b> guarda tu dinero como si fuera suyo!",
+        "textoBotonRegistro": "REGISTRARSE",
+        "tituloApp": "LintianWallet"
     },
     "eu": {
-        "tituloLogin": "SESIOA HASI"
+        "tituloLogin": "SESIOA HASI",
+        "eslogan": "Erosketei like gutxiago, zure poltsikoari gehiago, <b>LintianWallet</b>-ek zure dirua berea balitz bezala gordetzen du!",
+        "textoBotonRegistro": "ERREGISTRATU",
+        "tituloApp": "LintianWallet"
     }
 }

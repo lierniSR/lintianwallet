@@ -21,34 +21,86 @@
         <option value="zh-TW">Chino</option>
         <option value="ja">Japones</option>
     </select>
-    <div class="flex flex-col items-center justify-center h-screen bg-white rounded-xl">
-        <h1 class="text-4xl font-bold text-black" id="titulo">INICIAR SESIÓN</h1>
+    <div class="grid grid-cols-[1fr_auto_1fr] items-center justify-center h-screen bg-white rounded-xl">
+        <div class="flex flex-col items-center justify-center col-span-1 p-5">
+            <h1 id="tituloApp" class="text-4xl font-bold text-center"></h1>
+            <img src="img/logo.png" alt="Logo" class="w-72 h-72">
+            <p id="eslogan" class="text-center"></p>
+            <button id="botonRegistro" class="px-6 py-2 rounded-full bg-[#29C6AD] mt-5 text-white font-bold hover:bg-[#23a893] transition duration-300 shadow-lg">
+            </button>
+        </div>
+        <div class="h-3/4 w-1 bg-[#29C6AD] self-center"></div>
+        <div class="flex flex-col items-center justify-center col-span-1">
+            <h1 class="text-4xl font-bold text-center" id="titulo"></h1>
+            <div class="flex flex-col items-center justify-center">
+                <form class="flex flex-col gap-4 w-full max-w-sm mt-5">
+                    <div class="flex flex-col">
+                        <label for="dni" class="text-sm font-semibold">DNI</label>
+                        <input type="text" id="dni" name="dni" required placeholder="Por ej. 12345678A" class="w-100 p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-purple-600">
+                    </div>
+                    <div class="flex flex-col">
+                        <label for="password" class="text-sm font-semibold">Password</label>
+                        <input type="password" name="password" id="password" required placeholder="Por ej. ****" class="w-100 p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-purple-600">
+                    </div>
+                    <div class="flex flex-col items-center justify-center">
+                        <input type="submit" value="INICIAR SESION" class="w-50 px-6 py-2 rounded-full bg-[#29C6AD] mt-5 mb-5 text-white font-bold hover:bg-[#23a893] transition duration-300 shadow-lg">
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
-    <button id="btnTraducir">
-        <span>Click me</span>
-    </button>
     <script>
         let tituloES = "";
         let tituloEU = "";
+        let esloganES = "";
+        let esloganEU = "";
+        let botonRegistroES = "";
+        let botonRegistroEU = "";
+        let tituloAppES = "";
+        let tituloAppEU = "";
 
-        // Obtener JSON de traducciones desde CodeIgniter
-        fetch('jsoncontroller/traducciones')
-            .then(res => res.json())
-            .then(data => {
+        async function cargarJSON() {
+            // Obtener JSON de traducciones desde CodeIgniter
+            try {
+                const res = await fetch('jsoncontroller/traducciones');
+                const data = await res.json();
                 tituloES = data.es.tituloLogin;
                 tituloEU = data.eu.tituloLogin;
-            })
-            .catch(err => console.error('Error al cargar traducciones:', err));
+                esloganES = data.es.eslogan;
+                esloganEU = data.eu.eslogan;
+                botonRegistroES = data.es.textoBotonRegistro;
+                botonRegistroEU = data.eu.textoBotonRegistro;
+                tituloAppES = data.es.tituloApp;
+                tituloAppEU = data.eu.tituloApp;
+            } catch (err) {
+                console.error('Error al cargar traducciones:', err);
+            }
+        }
 
+        async function cargarStrings() {
+            await cargarJSON();
+            document.getElementById("titulo").innerHTML = tituloES;
+            document.getElementById("eslogan").innerHTML = esloganES;
+            document.getElementById("botonRegistro").innerHTML = botonRegistroES;
+            document.getElementById("tituloApp").innerHTML = tituloAppES;
+        }
+
+        document.addEventListener("DOMContentLoaded", cargarStrings);
 
 
         document.getElementById("selectIdioma").addEventListener("change", async () => {
             if (document.getElementById("selectIdioma").value == "eu") {
                 document.getElementById("titulo").innerHTML = tituloEU;
+                document.getElementById("eslogan").innerHTML = esloganEU;
+                document.getElementById("botonRegistro").innerHTML = botonRegistroEU;
+                document.getElementById("tituloApp").innerHTML = tituloAppEU;
                 return;
             }
             if (document.getElementById("selectIdioma").value == "es") {
                 document.getElementById("titulo").innerHTML = tituloES;
+                document.getElementById("eslogan").innerHTML = esloganES;
+                document.getElementById("botonRegistro").innerHTML = botonRegistroES;
+                document.getElementById("tituloApp").innerHTML = tituloAppES;
                 return;
             }
             if (!("Translator" in window)) {
@@ -62,9 +114,16 @@
                 });
 
                 const traduccionTituloLogin = await translator.translate(tituloES);
+                const traduccionEsLoganLogin = await translator.translate(esloganES);
+                const traduccionBotonRegistro = await translator.translate(botonRegistroES);
+                const traduccionTituloApp = await translator.translate(tituloAppES);
 
                 translator.destroy();
+
                 document.getElementById("titulo").innerHTML = traduccionTituloLogin.toUpperCase();
+                document.getElementById("eslogan").innerHTML = traduccionEsLoganLogin;
+                document.getElementById("botonRegistro").innerHTML = traduccionBotonRegistro.toUpperCase();
+                document.getElementById("tituloApp").innerHTML = traduccionTituloApp;
             } catch (error) {
                 console.error("Error al traducir:", error);
             }
