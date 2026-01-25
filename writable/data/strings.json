@@ -3,12 +3,16 @@
         "tituloLogin": "INICIAR SESION",
         "eslogan": "Menos likes a las compras, más a tu bolsillo, !<b>LintianWallet</b> guarda tu dinero como si fuera suyo!",
         "textoBotonRegistro": "REGISTRARSE",
-        "tituloApp": "LintianWallet"
+        "tituloApp": "LintianWallet",
+        "dni": "DNI",
+        "contrasenia": "Contraseña"
     },
     "eu": {
         "tituloLogin": "SESIOA HASI",
         "eslogan": "Erosketei like gutxiago, zure poltsikoari gehiago, <b>LintianWallet</b>-ek zure dirua berea balitz bezala gordetzen du!",
         "textoBotonRegistro": "ERREGISTRATU",
-        "tituloApp": "LintianWallet"
+        "tituloApp": "LintianWallet",
+        "dni": "NAN",
+        "contrasenia": "Pasahitza"
     }
 }
