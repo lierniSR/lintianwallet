@@ -5,7 +5,6 @@ use CodeIgniter\Router\RouteCollection;
 /**
  * @var RouteCollection $routes
  */
-$routes->get('/', 'Home::index');
 
 /**
  * Login y registro
@@ -13,6 +12,8 @@ $routes->get('/', 'Home::index');
 $routes->get('/login', 'C_Login::index');
 $routes->post('/login', 'C_Login::index');
 $routes->post('/registro', 'C_Login::registroIndex');
+$routes->post('/autenticarRegistro', 'C_Login::autenticarRegistro');
+$routes->post('/autenticar', 'C_Login::autenticar');
 
 
 /**

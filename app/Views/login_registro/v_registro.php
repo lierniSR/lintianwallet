@@ -39,6 +39,17 @@
         <div class="flex flex-col items-center justify-center col-span-1">
             <h1 class="text-4xl font-bold text-center" id="titulo"></h1>
             <div class="flex flex-col items-center justify-center">
+                <!-- Errores de validación -->
+                <?php if (session()->getFlashdata('errors')): ?>
+                    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mt-4 w-full max-w-sm" role="alert">
+                        <ul class="list-disc list-inside">
+                            <?php foreach (session()->getFlashdata('errors') as $error): ?>
+                                <li><?= esc($error) ?></li>
+                            <?php endforeach; ?>
+                        </ul>
+                    </div>
+                <?php endif; ?>
+
                 <!--Formulario para inciar sesión -->
                 <?= form_open('/autenticarRegistro', ['class' => 'flex flex-col gap-4 w-full max-w-sm mt-5']) ?>
 
@@ -49,6 +60,7 @@
                         'type'        => 'text',
                         'name'        => 'dni',
                         'id'          => 'dni',
+                        'value'       => old('dni'),
                         'required'    => true,
                         'placeholder' => 'Ej. 12345678A',
                         'class'       => 'w-100 p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-purple-600'
@@ -62,6 +74,7 @@
                         'type'        => 'text',
                         'name'        => 'nombre',
                         'id'          => 'nombre',
+                        'value'       => old('nombre'),
                         'required'    => true,
                         'placeholder' => 'Ej. Juan',
                         'class'       => 'w-100 p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-purple-600'
@@ -75,6 +88,7 @@
                         'type'        => 'text',
                         'name'        => 'apellido',
                         'id'          => 'apellido',
+                        'value'       => old('apellido'),
                         'required'    => true,
                         'placeholder' => 'Ej. Perez',
                         'class'       => 'w-100 p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-purple-600'
@@ -88,6 +102,7 @@
                         'type'        => 'email',
                         'name'        => 'gmail',
                         'id'          => 'gmail',
+                        'value'       => old('gmail'),
                         'required'    => true,
                         'placeholder' => 'Ej. icjardin@gmail.com',
                         'class'       => 'w-100 p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-purple-600'
@@ -95,11 +110,11 @@
                 </div>
 
                 <div class="flex flex-col">
-                    <?= form_label('', 'password', ['class' => 'text-sm font-semibold', 'id' => 'passwordLabel']) ?>
+                    <?= form_label('', 'contrasenia', ['class' => 'text-sm font-semibold', 'id' => 'passwordLabel']) ?>
 
                     <?= form_password([
-                        'name'        => 'password',
-                        'id'          => 'password',
+                        'name'        => 'contrasenia',
+                        'id'          => 'contrasenia',
                         'required'    => true,
                         'placeholder' => 'Ej. ****',
                         'class'       => 'w-100 p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-purple-600'
@@ -215,7 +230,7 @@
             if (document.getElementById("selectIdioma").value == "eu") {
                 document.getElementById("titulo").innerHTML = tituloEU;
                 document.getElementById("eslogan").innerHTML = esloganEU;
-                document.getElementById("botonRegistro").innerHTML = botonRegistroEU;
+                document.getElementById("botonRegistro").value = botonRegistroEU;
                 document.getElementById("tituloApp").innerHTML = tituloAppEU;
                 document.getElementById("dniLabel").innerHTML = dniEU;
                 document.getElementById("nombreLabel").innerHTML = nombreEU;
@@ -223,14 +238,14 @@
                 document.getElementById("gmailLabel").innerHTML = gmailEU;
                 document.getElementById("fotoPerfilLabel").innerHTML = fotoEU;
                 document.getElementById("passwordLabel").innerHTML = passwordEU;
-                document.getElementById("botonInicio").value = botonInicioEU;
+                document.getElementById("botonInicio").innerHTML = botonInicioEU;
                 return;
             }
             //Si el valor seleccionado es ES se cambia del data del json
             if (document.getElementById("selectIdioma").value == "es") {
                 document.getElementById("titulo").innerHTML = tituloES;
                 document.getElementById("eslogan").innerHTML = esloganES;
-                document.getElementById("botonRegistro").innerHTML = botonRegistroES;
+                document.getElementById("botonRegistro").value = botonRegistroES;
                 document.getElementById("tituloApp").innerHTML = tituloAppES;
                 document.getElementById("dniLabel").innerHTML = dniES;
                 document.getElementById("nombreLabel").innerHTML = nombreES;
@@ -238,7 +253,7 @@
                 document.getElementById("gmailLabel").innerHTML = gmailES;
                 document.getElementById("fotoPerfilLabel").innerHTML = fotoES;
                 document.getElementById("passwordLabel").innerHTML = passwordES;
-                document.getElementById("botonInicio").value = botonInicioES;
+                document.getElementById("botonInicio").innerHTML = botonInicioES;
                 return;
             }
             //Si no llegará al traductor IA
@@ -272,7 +287,7 @@
                 //Poner cada traducción en su campo
                 document.getElementById("titulo").innerHTML = traduccionTituloLogin.toUpperCase();
                 document.getElementById("eslogan").innerHTML = traduccionEsLoganLogin;
-                document.getElementById("botonRegistro").innerHTML = traduccionBotonRegistro.toUpperCase();
+                document.getElementById("botonRegistro").value = traduccionBotonRegistro.toUpperCase();
                 document.getElementById("tituloApp").innerHTML = traduccionTituloApp;
                 document.getElementById("dniLabel").innerHTML = traduccionDNI;
                 document.getElementById("nombreLabel").innerHTML = traduccionNombre;
@@ -280,7 +295,7 @@
                 document.getElementById("gmailLabel").innerHTML = traduccionGmail;
                 document.getElementById("fotoPerfilLabel").innerHTML = traduccionFotoPerfil;
                 document.getElementById("passwordLabel").innerHTML = traduccionPassword;
-                document.getElementById("botonInicio").value = traduccionBotonLogin.toUpperCase();
+                document.getElementById("botonInicio").innerHTML = traduccionBotonLogin.toUpperCase();
             } catch (error) {
                 console.error("Error al traducir:", error);
             }
