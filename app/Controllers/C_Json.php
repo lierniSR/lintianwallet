@@ -8,7 +8,7 @@ class C_Json extends BaseController
 {
     public function traducciones()
     {
-        $ruta = WRITEPATH . 'data\strings.json';
+        $ruta = FCPATH . 'data/strings.json';
 
         if (!file_exists($ruta)) {
             return $this->response->setContentType('application/json')
