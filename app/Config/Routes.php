@@ -9,6 +9,7 @@ use CodeIgniter\Router\RouteCollection;
 /**
  * Login y registro
  */
+$routes->get('/', 'C_Login::index');
 $routes->get('/login', 'C_Login::index');
 $routes->post('/login', 'C_Login::index');
 $routes->post('/registro', 'C_Login::registroIndex');
