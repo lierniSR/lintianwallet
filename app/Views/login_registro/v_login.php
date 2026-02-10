@@ -10,50 +10,71 @@
 
 </head>
 
-<body class="relative min-h-screen bg-gradient-to-b from-purple-600 via-purple-700 to-blue-900 p-10 flex flex-col items-center justify-center">
-    <!-- Select para los idiomas -->
-    <select id="selectIdioma" class="p-2 rounded border border-gray-300 bg-white mb-5">
-        <option value="es">Español</option>
-        <option value="en">Inglés</option>
-        <option value="fr">Frances</option>
-        <option value="eu">Euskera</option>
-        <option value="pt">Portugues</option>
-        <option value="it">Italiano</option>
-        <option value="zh-TW">Chino</option>
-        <option value="ja">Japones</option>
-    </select>
-    <!-- Div padre -->
-    <div class="grid grid-cols-[1fr_auto_1fr] items-center justify-center h-auto p-10 bg-white rounded-xl shadow-2xl">
-        <!-- Div izquierdo -->
-        <div class="flex flex-col items-center justify-center col-span-1 p-5">
-            <h1 id="tituloApp" class="text-4xl font-bold text-center"></h1>
-            <img src="img/logo.png" alt="Logo" class="w-72 h-72">
-            <p id="eslogan" class="text-center"></p>
+<body class="relative min-h-screen bg-gradient-to-b from-purple-600 via-purple-700 to-blue-900 px-4 py-8 md:p-10 flex flex-col items-center justify-center">
 
-            <?= form_open('/registro') ?>
-            <button id="botonRegistro" class="px-6 py-2 rounded-full bg-[#29C6AD] mt-5 text-white font-bold hover:bg-[#23a893] transition duration-300 shadow-lg">
+    <!-- Div padre -->
+    <!-- Mobile: Flex column. Desktop: Grid 3 columns -->
+    <div class="flex flex-col md:grid md:grid-cols-[1fr_auto_1fr] items-center justify-center w-full max-w-sm md:max-w-5xl h-auto p-6 md:p-10 bg-white rounded-xl shadow-2xl gap-8 md:gap-8 lg:gap-12 relative overflow-hidden">
+
+        <!-- Language Selector: Now inside the card, positioned absolutely top-right -->
+        <div class="absolute top-4 right-4 z-20">
+            <select id="selectIdioma" class="p-1.5 rounded-md border border-gray-200 text-gray-600 text-sm bg-gray-50 hover:bg-white cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#29C6AD] transition-colors">
+                <option value="es">Español</option>
+                <option value="en">Inglés</option>
+                <option value="fr">Frances</option>
+                <option value="eu">Euskera</option>
+                <option value="pt">Portugues</option>
+                <option value="it">Italiano</option>
+                <option value="zh-TW">Chino</option>
+                <option value="ja">Japones</option>
+            </select>
+        </div>
+
+        <!-- Decoration/Background blobs could be added here if needed, but keeping it clean per request -->
+
+        <!-- Div izquierdo: App Info -->
+        <div class="flex flex-col items-center justify-center w-full h-full order-1 md:order-none mt-6 md:mt-0">
+            <h1 id="tituloApp" class="text-3xl lg:text-4xl font-bold text-center text-gray-800 mb-4 transition-all duration-300"></h1>
+
+            <div class="relative group">
+                <div class="absolute -inset-1 bg-gradient-to-r from-purple-600 to-blue-600 rounded-full blur opacity-25 group-hover:opacity-50 transition duration-1000 group-hover:duration-200"></div>
+                <img src="img/logo.png" alt="Logo" class="relative w-48 h-48 md:w-56 md:h-56 lg:w-64 lg:h-64 object-contain mb-4 transform group-hover:scale-105 transition duration-300">
+            </div>
+
+            <p id="eslogan" class="text-center text-gray-600 font-medium px-4"></p>
+
+            <?= form_open('/registro', ['class' => 'w-full flex justify-center mt-6']) ?>
+            <button id="botonRegistro" class="px-8 py-2.5 rounded-full bg-[#29C6AD] text-white font-bold tracking-wide hover:bg-[#23a893] hover:shadow-lg transform hover:-translate-y-0.5 transition-all duration-300">
             </button>
             <?= form_close() ?>
         </div>
-        <!-- Div medio -->
-        <div class="h-3/4 w-1 bg-[#29C6AD] self-center"></div>
-        <!-- Div derecho -->
-        <div class="flex flex-col items-center justify-center col-span-1">
-            <h1 class="text-4xl font-bold text-center" id="titulo"></h1>
-            <div class="flex flex-col items-center justify-center">
+
+        <!-- Div medio: Separator -->
+        <!-- Mobile: Horizontal line. Desktop: Vertical line -->
+        <div class="w-full h-px md:w-px md:h-64 bg-gray-200 md:bg-gradient-to-b md:from-transparent md:via-gray-300 md:to-transparent order-2 md:order-none my-2 md:my-0"></div>
+
+        <!-- Div derecho: Login Form -->
+        <div class="flex flex-col items-center justify-center w-full h-full order-3 md:order-none">
+            <h1 class="text-3xl lg:text-4xl font-bold text-center text-gray-800 mb-8" id="titulo"></h1>
+
+            <div class="w-full flex flex-col items-center justify-center">
                 <!-- Errores de validación -->
                 <?php if (session()->getFlashdata('error')): ?>
-                    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mt-4 w-full max-w-sm" role="alert">
-                        <ul class="list-disc list-inside">
-                            <li><?= esc(session()->getFlashdata('error')) ?></li>
-                        </ul>
+                    <div class="w-full bg-red-50 border-l-4 border-red-500 text-red-700 p-4 rounded-r shadow-sm mb-6 animate-pulse" role="alert">
+                        <div class="flex items-center">
+                            <svg class="h-5 w-5 text-red-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                            <span class="font-medium"><?= esc(session()->getFlashdata('error')) ?></span>
+                        </div>
                     </div>
                 <?php endif; ?>
-                <!--Formulario para inciar sesión -->
-                <?= form_open('/autenticar', ['class' => 'flex flex-col gap-4 w-full max-w-sm mt-5']) ?>
 
-                <div class="flex flex-col">
-                    <?= form_label('', 'dni', ['class' => 'text-sm font-semibold', 'id' => 'dniLabel']) ?>
+                <!--Formulario para inciar sesión -->
+                <?= form_open('/autenticar', ['class' => 'flex flex-col gap-6 w-full']) ?>
+
+                <div class="flex flex-col group">
+                    <?= form_label('', 'dni', ['class' => 'text-sm font-semibold text-gray-600 mb-1.5 ml-1 transition-colors group-focus-within:text-[#29C6AD]', 'id' => 'dniLabel']) ?>
 
                     <?= form_input([
                         'type'        => 'text',
@@ -62,26 +83,28 @@
                         'value'       => old('dni'),
                         'required'    => true,
                         'placeholder' => 'Ej. 12345678A',
-                        'class'       => 'w-100 p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-purple-600'
+                        'class'       => 'w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#29C6AD]/50 focus:border-[#29C6AD] transition-all duration-200 bg-gray-50 focus:bg-white'
                     ]) ?>
                 </div>
 
-                <div class="flex flex-col">
-                    <?= form_label('', 'contrasenia', ['class' => 'text-sm font-semibold', 'id' => 'passwordLabel']) ?>
+                <div class="flex flex-col group">
+                    <div class="flex justify-between items-center mb-1.5 ml-1">
+                        <?= form_label('', 'contrasenia', ['class' => 'text-sm font-semibold text-gray-600 transition-colors group-focus-within:text-[#29C6AD]', 'id' => 'passwordLabel']) ?>
+                    </div>
 
                     <?= form_password([
                         'name'        => 'contrasenia',
                         'id'          => 'contrasenia',
                         'required'    => true,
                         'placeholder' => 'Ej. ****',
-                        'class'       => 'w-100 p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-purple-600'
+                        'class'       => 'w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#29C6AD]/50 focus:border-[#29C6AD] transition-all duration-200 bg-gray-50 focus:bg-white'
                     ]) ?>
                 </div>
 
-                <div class="flex flex-col items-center justify-center">
+                <div class="flex flex-col items-center justify-center mt-2">
                     <?= form_submit('botonInicio', '', [
                         'id'    => 'botonInicio',
-                        'class' => 'w-50 px-6 py-2 rounded-full bg-[#29C6AD] mt-5 mb-5 text-white font-bold hover:bg-[#23a893] transition duration-300 shadow-lg'
+                        'class' => 'w-full px-8 py-3.5 rounded-full bg-gradient-to-r from-[#29C6AD] to-[#23a893] text-white font-bold text-lg hover:shadow-lg hover:to-[#1f9683] transform hover:-translate-y-0.5 transition-all duration-300 cursor-pointer'
                     ]) ?>
                 </div>
 
