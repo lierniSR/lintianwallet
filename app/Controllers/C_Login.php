@@ -15,7 +15,6 @@ class C_Login extends BaseController
 
     public function index(): string
     {
-        dd(env('app.baseURL'));
         return view('login_registro/v_login');
     }
 
