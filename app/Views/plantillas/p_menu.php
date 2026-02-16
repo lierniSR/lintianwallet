@@ -1,5 +1,5 @@
-<header class="sticky top-0 z-50 w-full bg-white/80 backdrop-blur-md border-b border-gray-100 shadow-sm">
-    <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<header class="sticky top-0 z-50 w-full bg-white border-b border-gray-200 shadow-sm">
+    <nav class="w-full px-4 sm:px-6 lg:px-12">
         <div class="flex justify-between h-16 items-center">
             <!-- Logo Section -->
             <div class="flex-shrink-0 flex items-center gap-2">
@@ -65,7 +65,7 @@
 
         <!-- Mobile Menu (Hidden by default) -->
         <div id="mobile-menu" class="hidden md:hidden pb-4 transition-all duration-300 ease-in-out">
-            <ul class="flex flex-col space-y-1">
+            <ul class="flex flex-col space-y-2">
                 <li>
                     <a href="/tarjetas" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-600 hover:bg-purple-50 hover:text-purple-600 font-semibold transition-all">
                         <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
