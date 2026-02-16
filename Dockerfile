@@ -12,10 +12,10 @@ RUN apt-get update && apt-get install -y \
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 # 3. Habilitar mod_rewrite de Apache para el enrutamiento de CodeIgniter
 RUN a2enmod rewrite
-# 4. Cambiar el DocumentRoot de Apache a la carpeta 'public' de CI4
+# 4. Cambiar DocumentRoot a /public
 ENV APACHE_DOCUMENT_ROOT /var/www/html/public
 RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-available/*.conf
-RUN sed -ri -e 's!/var/www/inc/!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/apache2.conf /etc/apache2/conf-available/*.conf
+RUN sed -ri -e 's!Directory /var/www/!Directory ${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/apache2.conf
 # 5. Establecer el directorio de trabajo
 WORKDIR /var/www/html
 # 6. Copiar los archivos del proyecto al contenedor
