@@ -19,7 +19,7 @@
                 <p class="text-purple-100 mt-2 font-medium">Gestiona tus finanzas con estilo y seguridad.</p>
             </div>
 
-            <button class="flex items-center gap-2 px-6 py-3 bg-white/10 hover:bg-white/20 backdrop-blur-md text-white font-bold rounded-2xl border border-white/20 transition-all duration-300 transform hover:-translate-y-1">
+            <button onclick="window.location.href='<?= base_url('tarjetas/new') ?>'" class="flex items-center gap-2 px-6 py-3 bg-white/10 hover:bg-white/20 backdrop-blur-md text-white font-bold rounded-2xl border border-white/20 transition-all duration-300 transform hover:-translate-y-1">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
                 </svg>
@@ -77,11 +77,14 @@
                                             <div></div>
                                         </div>
                                     </div>
-
-                                    <div class="font-mono text-xl text-white/90 tracking-[0.2em] card-number-display"
-                                        data-number="<?= $cuenta->id_categoria ?>">
-                                        ••••
-                                    </div>
+                                    <?php foreach ($categorias as $categoria) : ?>
+                                        <?php if ($categoria->id == $cuenta->id_categoria) : ?>
+                                            <div class="font-mono text-xl text-white/90 tracking-[0.2em] card-number-display"
+                                                data-number="<?= $categoria->nombre ?>">
+                                                ••••
+                                            </div>
+                                        <?php endif; ?>
+                                    <?php endforeach; ?>
                                 </div>
 
                                 <!-- Card Brand Icon -->
