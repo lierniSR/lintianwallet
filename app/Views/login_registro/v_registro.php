@@ -12,9 +12,10 @@
 <body class="relative min-h-screen bg-gradient-to-b from-purple-600 via-purple-700 to-blue-900 px-4 py-8 md:p-10 flex flex-col items-center justify-center">
 
     <!-- Div padre -->
-    <div class="flex flex-col md:grid md:grid-cols-[1fr_auto_1fr] items-center justify-center w-full max-w-sm md:max-w-6xl h-auto p-6 md:p-10 bg-white rounded-xl shadow-2xl gap-8 md:gap-8 lg:gap-12 relative overflow-hidden my-4">
+    <!-- Mobile: Flex column. Desktop: Grid 3 columns -->
+    <div class="flex flex-col md:grid md:grid-cols-[1fr_auto_1fr] items-center justify-center w-full max-w-sm md:max-w-5xl h-auto p-6 md:p-10 bg-white rounded-xl shadow-2xl gap-8 md:gap-8 lg:gap-12 relative overflow-hidden">
 
-        <!-- Language Selector -->
+        <!-- Language Selector: Inside the card, positioned absolutely top-right -->
         <div class="absolute top-4 right-4 z-20">
             <select id="selectIdioma" class="p-1.5 rounded-md border border-gray-200 text-gray-600 text-sm bg-gray-50 hover:bg-white cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#29C6AD] transition-colors">
                 <option value="es">Español</option>
@@ -28,7 +29,7 @@
             </select>
         </div>
 
-        <!-- Div izquierdo: App Info & Login Button -->
+        <!-- Div izquierdo: App Info -->
         <div class="flex flex-col items-center justify-center w-full h-full order-1 md:order-none mt-6 md:mt-0">
             <h1 id="tituloApp" class="text-3xl lg:text-4xl font-bold text-center text-gray-800 mb-4 transition-all duration-300"></h1>
 
@@ -46,11 +47,11 @@
         </div>
 
         <!-- Div medio: Separator -->
-        <div class="w-full h-px md:w-px md:h-full min-h-[200px] bg-gray-200 md:bg-gradient-to-b md:from-transparent md:via-gray-300 md:to-transparent order-2 md:order-none my-2 md:my-0"></div>
+        <div class="w-full h-px md:w-px md:h-64 bg-gray-200 md:bg-gradient-to-b md:from-transparent md:via-gray-300 md:to-transparent order-2 md:order-none my-2 md:my-0"></div>
 
-        <!-- Div derecho: Registration Form -->
+        <!-- Div derecho: Registro Form -->
         <div class="flex flex-col items-center justify-center w-full h-full order-3 md:order-none">
-            <h1 class="text-2xl md:text-3xl lg:text-4xl font-bold text-center text-gray-800 mb-6 mt-10 md:mt-2" id="titulo"></h1>
+            <h1 class="text-3xl lg:text-4xl font-bold text-center text-gray-800 mb-8" id="titulo"></h1>
 
             <div class="w-full flex flex-col items-center justify-center">
                 <!-- Errores de validación (Múltiples) -->
@@ -85,85 +86,83 @@
                 <?= form_open('/autenticarRegistro', ['class' => 'flex flex-col gap-5 w-full']) ?>
 
                 <div class="flex flex-col group">
-                    <?= form_label('', 'dni', ['class' => 'text-sm font-semibold text-gray-600 mb-1.5 ml-1 transition-colors group-focus-within:text-[#29C6AD]', 'id' => 'dniLabel']) ?>
+                    <?= form_label('', 'dni', ['class' => 'text-xs font-semibold text-gray-600 mb-1 ml-1 transition-colors group-focus-within:text-[#29C6AD]', 'id' => 'dniLabel']) ?>
                     <?= form_input([
                         'type'        => 'text',
                         'name'        => 'dni',
                         'id'          => 'dni',
                         'value'       => old('dni'),
                         'required'    => true,
-                        'placeholder' => 'Ej. 12345678A',
-                        'class'       => 'w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#29C6AD]/50 focus:border-[#29C6AD] transition-all duration-200 bg-gray-50 focus:bg-white'
+                        'placeholder' => '12345678A',
+                        'class'       => 'w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#29C6AD]/50 focus:border-[#29C6AD] transition-all bg-gray-50 focus:bg-white text-sm'
                     ]) ?>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="grid grid-cols-2 gap-4">
                     <div class="flex flex-col group">
-                        <?= form_label('', 'nombre', ['class' => 'text-sm font-semibold text-gray-600 mb-1.5 ml-1 transition-colors group-focus-within:text-[#29C6AD]', 'id' => 'nombreLabel']) ?>
+                        <?= form_label('', 'nombre', ['class' => 'text-xs font-semibold text-gray-600 mb-1 ml-1 transition-colors group-focus-within:text-[#29C6AD]', 'id' => 'nombreLabel']) ?>
                         <?= form_input([
                             'type'        => 'text',
                             'name'        => 'nombre',
                             'id'          => 'nombre',
                             'value'       => old('nombre'),
                             'required'    => true,
-                            'placeholder' => 'Ej. Juan',
-                            'class'       => 'w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#29C6AD]/50 focus:border-[#29C6AD] transition-all duration-200 bg-gray-50 focus:bg-white'
+                            'placeholder' => 'Juan',
+                            'class'       => 'w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#29C6AD]/50 focus:border-[#29C6AD] transition-all bg-gray-50 focus:bg-white text-sm'
                         ]) ?>
                     </div>
                     <div class="flex flex-col group">
-                        <?= form_label('', 'apellido', ['class' => 'text-sm font-semibold text-gray-600 mb-1.5 ml-1 transition-colors group-focus-within:text-[#29C6AD]', 'id' => 'apellidoLabel']) ?>
+                        <?= form_label('', 'apellido', ['class' => 'text-xs font-semibold text-gray-600 mb-1 ml-1 transition-colors group-focus-within:text-[#29C6AD]', 'id' => 'apellidoLabel']) ?>
                         <?= form_input([
                             'type'        => 'text',
                             'name'        => 'apellido',
                             'id'          => 'apellido',
                             'value'       => old('apellido'),
                             'required'    => true,
-                            'placeholder' => 'Ej. Perez',
-                            'class'       => 'w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#29C6AD]/50 focus:border-[#29C6AD] transition-all duration-200 bg-gray-50 focus:bg-white'
+                            'placeholder' => 'Pérez',
+                            'class'       => 'w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#29C6AD]/50 focus:border-[#29C6AD] transition-all bg-gray-50 focus:bg-white text-sm'
                         ]) ?>
                     </div>
                 </div>
 
                 <div class="flex flex-col group">
-                    <?= form_label('', 'gmail', ['class' => 'text-sm font-semibold text-gray-600 mb-1.5 ml-1 transition-colors group-focus-within:text-[#29C6AD]', 'id' => 'gmailLabel']) ?>
+                    <?= form_label('', 'gmail', ['class' => 'text-xs font-semibold text-gray-600 mb-1 ml-1 transition-colors group-focus-within:text-[#29C6AD]', 'id' => 'gmailLabel']) ?>
                     <?= form_input([
                         'type'        => 'email',
                         'name'        => 'gmail',
                         'id'          => 'gmail',
                         'value'       => old('gmail'),
                         'required'    => true,
-                        'placeholder' => 'Ej. icjardin@gmail.com',
-                        'class'       => 'w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#29C6AD]/50 focus:border-[#29C6AD] transition-all duration-200 bg-gray-50 focus:bg-white'
+                        'placeholder' => 'juan@gmail.com',
+                        'class'       => 'w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#29C6AD]/50 focus:border-[#29C6AD] transition-all bg-gray-50 focus:bg-white text-sm'
                     ]) ?>
                 </div>
 
                 <div class="flex flex-col group">
-                    <?= form_label('', 'contrasenia', ['class' => 'text-sm font-semibold text-gray-600 mb-1.5 ml-1 transition-colors group-focus-within:text-[#29C6AD]', 'id' => 'passwordLabel']) ?>
+                    <?= form_label('', 'contrasenia', ['class' => 'text-xs font-semibold text-gray-600 mb-1 ml-1 transition-colors group-focus-within:text-[#29C6AD]', 'id' => 'passwordLabel']) ?>
                     <?= form_password([
                         'name'        => 'contrasenia',
                         'id'          => 'contrasenia',
                         'required'    => true,
-                        'placeholder' => 'Ej. ****',
-                        'class'       => 'w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#29C6AD]/50 focus:border-[#29C6AD] transition-all duration-200 bg-gray-50 focus:bg-white'
+                        'placeholder' => '****',
+                        'class'       => 'w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#29C6AD]/50 focus:border-[#29C6AD] transition-all bg-gray-50 focus:bg-white text-sm'
                     ]) ?>
                 </div>
 
                 <div class="flex flex-col group">
-                    <?= form_label('', 'fotoPerfil', ['class' => 'text-sm font-semibold text-gray-600 mb-1.5 ml-1 transition-colors group-focus-within:text-[#29C6AD]', 'id' => 'fotoPerfilLabel']) ?>
-                    <div class="relative">
-                        <?= form_input([
-                            'type'        => 'file',
-                            'name'        => 'fotoPerfil',
-                            'id'          => 'fotoPerfil',
-                            'class'       => 'w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#29C6AD]/50 focus:border-[#29C6AD] transition-all duration-200 bg-gray-50 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-[#29C6AD]/10 file:text-[#29C6AD] hover:file:bg-[#29C6AD]/20'
-                        ]) ?>
-                    </div>
+                    <?= form_label('', 'fotoPerfil', ['class' => 'text-xs font-semibold text-gray-600 mb-1 ml-1 transition-colors group-focus-within:text-[#29C6AD]', 'id' => 'fotoPerfilLabel']) ?>
+                    <?= form_input([
+                        'type'        => 'file',
+                        'name'        => 'fotoPerfil',
+                        'id'          => 'fotoPerfil',
+                        'class'       => 'w-full text-xs text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-[#29C6AD]/10 file:text-[#29C6AD] hover:file:bg-[#29C6AD]/20 transition-all'
+                    ]) ?>
                 </div>
 
-                <div class="flex flex-col items-center justify-center mt-4">
+                <div class="flex flex-col items-center justify-center mt-2">
                     <?= form_submit('botonRegistro', '', [
                         'id'    => 'botonRegistro',
-                        'class' => 'w-full px-8 py-3.5 rounded-full bg-gradient-to-r from-[#29C6AD] to-[#23a893] text-white font-bold text-lg hover:shadow-lg hover:to-[#1f9683] transform hover:-translate-y-0.5 transition-all duration-300 cursor-pointer'
+                        'class' => 'w-full px-8 py-3 rounded-full bg-gradient-to-r from-[#29C6AD] to-[#23a893] text-white font-bold hover:shadow-lg hover:to-[#1f9683] transform hover:-translate-y-0.5 transition-all duration-300 cursor-pointer'
                     ]) ?>
                 </div>
 

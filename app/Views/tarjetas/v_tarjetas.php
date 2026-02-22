@@ -10,6 +10,7 @@
 </head>
 
 <body class="relative min-h-screen bg-gradient-to-b from-purple-600 via-purple-700 to-blue-900 pb-12 font-sans selection:bg-[#29C6AD]/30">
+
     <?= view('plantillas/p_menu.php') ?>
 
     <main class="max-w-7xl mx-auto mt-10 px-4">
@@ -98,8 +99,8 @@
                             </div>
                         </div>
 
-                        <!-- Hover Action Overlays -->
-                        <div class="absolute inset-0 bg-black/40 backdrop-blur-[2px] opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-center justify-center gap-4">
+                        <!-- Hover/Tap Action Overlays -->
+                        <div class="absolute inset-0 bg-black/40 backdrop-blur-[2px] opacity-0 group-hover:opacity-100 group-[.mobile-active]:opacity-100 transition-all duration-300 flex items-center justify-center gap-4 pointer-events-none group-hover:pointer-events-auto group-[.mobile-active]:pointer-events-auto">
                             <button title="Ver/Ocultar Categoría" class="toggle-number-btn p-3 bg-white/20 hover:bg-white/30 rounded-full text-white transition-all transform hover:scale-110">
                                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -141,8 +142,10 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+            // Toggle Card Number
             document.querySelectorAll('.toggle-number-btn').forEach(btn => {
                 btn.addEventListener('click', (e) => {
+                    e.stopPropagation(); // Avoid triggering mobile tap reveal
                     const card = e.currentTarget.closest('.group');
                     const display = card.querySelector('.card-number-display');
 
@@ -153,9 +156,32 @@
                     }
                 });
             });
+
+            // Mobile Interactivity: Tap to Reveal Overlay
+            const cards = document.querySelectorAll('.group.relative.h-56');
+
+            cards.forEach(card => {
+                card.addEventListener('click', (e) => {
+                    // Check if we are on a touch device or small screen
+                    if (window.innerWidth < 1024) {
+                        const isActive = card.classList.contains('mobile-active');
+
+                        // Close all other cards
+                        cards.forEach(c => c.classList.remove('mobile-active'));
+
+                        if (!isActive) {
+                            card.classList.add('mobile-active');
+                        }
+                    }
+                });
+            });
+
+            // Close card overlay when clicking outside
+            document.addEventListener('click', (e) => {
+                if (!e.target.closest('.group')) {
+                    cards.forEach(card => card.classList.remove('mobile-active'));
+                }
+            });
         });
     </script>
 </body>
-
-
-</html>
