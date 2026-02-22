@@ -54,19 +54,36 @@
             <h1 class="text-3xl lg:text-4xl font-bold text-center text-gray-800 mb-8" id="titulo"></h1>
 
             <div class="w-full flex flex-col items-center justify-center">
-                <!-- Errores de validación -->
+                <!-- Errores de validación (Múltiples) -->
                 <?php if (session()->getFlashdata('errors')): ?>
                     <div class="w-full bg-red-50 border-l-4 border-red-500 text-red-700 p-4 rounded-r shadow-sm mb-6" role="alert">
-                        <ul class="text-sm list-disc list-inside font-medium">
-                            <?php foreach (session()->getFlashdata('errors') as $error): ?>
-                                <li><?= esc($error) ?></li>
-                            <?php endforeach; ?>
-                        </ul>
+                        <div class="flex items-start">
+                            <svg class="h-5 w-5 text-red-500 mr-2 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                            <ul class="list-disc list-inside text-sm font-medium">
+                                <?php foreach (session()->getFlashdata('errors') as $error): ?>
+                                    <li><?= esc($error) ?></li>
+                                <?php endforeach; ?>
+                            </ul>
+                        </div>
                     </div>
                 <?php endif; ?>
 
-                <!-- Formulario de Registro -->
-                <?= form_open_multipart('/autenticarRegistro', ['class' => 'flex flex-col gap-4 w-full']) ?>
+                <!-- Error singular (DNI duplicado, etc) -->
+                <?php if (session()->getFlashdata('error')): ?>
+                    <div class="w-full bg-red-50 border-l-4 border-red-500 text-red-700 p-4 rounded-r shadow-sm mb-6" role="alert">
+                        <div class="flex items-center">
+                            <svg class="h-5 w-5 text-red-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                            <p class="text-sm font-medium"><?= session()->getFlashdata('error') ?></p>
+                        </div>
+                    </div>
+                <?php endif; ?>
+
+                <!--Formulario para registrarse -->
+                <?= form_open('/autenticarRegistro', ['class' => 'flex flex-col gap-5 w-full']) ?>
 
                 <div class="flex flex-col group">
                     <?= form_label('', 'dni', ['class' => 'text-xs font-semibold text-gray-600 mb-1 ml-1 transition-colors group-focus-within:text-[#29C6AD]', 'id' => 'dniLabel']) ?>

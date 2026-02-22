@@ -10,13 +10,13 @@ class C_Tarjeta extends BaseController
 {
     protected $modeloCuentas;
     protected $modeloUsuario;
-    protected $modeloCategoria;
+    protected $modeloCategorias;
 
     public function __construct()
     {
         $this->modeloCuentas = new M_Cuentas();
         $this->modeloUsuario = new M_Usuario();
-        $this->modeloCategoria = new M_Categoria();
+        $this->modeloCategorias = new M_Categoria();
     }
 
     public function index()
@@ -24,10 +24,10 @@ class C_Tarjeta extends BaseController
         if (session()->get('dni') == null) {
             return redirect()->to('/login');
         }
-        $cuentas = $this->modeloCuentas->findAll();
+        $cuentas = $this->modeloCuentas->where('id_usuario', session()->get('dni'))->findAll();
         $data['cuentas'] = $cuentas;
         $data['usuario'] = $this->modeloUsuario->where('dni', session()->get('dni'))->first();
-        $data['categorias'] = $this->modeloCategoria->findAll();
+        $data['categorias'] = $this->modeloCategorias->findAll();
         return view('tarjetas/v_tarjetas', $data);
     }
 }

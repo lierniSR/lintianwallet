@@ -20,7 +20,7 @@
                 <p class="text-purple-100 mt-2 font-medium">Gestiona tus finanzas con estilo y seguridad.</p>
             </div>
 
-            <button class="flex items-center gap-2 px-6 py-3 bg-white/10 hover:bg-white/20 backdrop-blur-md text-white font-bold rounded-2xl border border-white/20 transition-all duration-300 transform hover:-translate-y-1">
+            <button onclick="window.location.href='<?= base_url('tarjetas/new') ?>'" class="flex items-center gap-2 px-6 py-3 bg-white/10 hover:bg-white/20 backdrop-blur-md text-white font-bold rounded-2xl border border-white/20 transition-all duration-300 transform hover:-translate-y-1">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
                 </svg>
@@ -133,7 +133,7 @@
                 </div>
                 <h3 class="text-2xl font-bold text-white mb-2">Aún no tienes cuentas</h3>
                 <p class="text-purple-200 mb-8">Comienza a ahorrar creando tu primera cuenta ahora.</p>
-                <button class="px-8 py-3 bg-[#29C6AD] hover:bg-[#23a893] text-white font-bold rounded-full shadow-lg transition-all transform hover:scale-105">
+                <button onclick="window.location.href='<?= base_url('tarjetas/new') ?>'" class="px-8 py-3 bg-[#29C6AD] hover:bg-[#23a893] text-white font-bold rounded-full shadow-lg transition-all transform hover:scale-105">
                     Crear mi primera cuenta
                 </button>
             </div>

@@ -45,10 +45,11 @@ class C_Login extends BaseController
     {
         $rules = [
             'dni' => [
-                'rules'  => 'required|regex_match[/^[0-9]{8}[A-Z]$/]',
+                'rules'  => 'required|regex_match[/^[0-9]{8}[A-Z]$/]|is_unique[usuario.dni]',
                 'errors' => [
                     'required'    => 'El DNI es obligatorio.',
                     'regex_match' => 'El formato del DNI no es válido (ej. 12345678A).',
+                    'is_unique'   => 'El DNI ya está registrado.',
                 ],
             ],
             'nombre' => [
