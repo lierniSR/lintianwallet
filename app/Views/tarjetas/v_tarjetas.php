@@ -10,6 +10,53 @@
 </head>
 
 <body class="relative min-h-screen bg-gradient-to-b from-purple-600 via-purple-700 to-blue-900 pb-12 font-sans selection:bg-[#29C6AD]/30">
+    <!-- Bloqueo de Seguridad para Móviles/Tablets -->
+    <script>
+        (function() {
+            const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ||
+                (window.innerWidth <= 1024 && window.innerHeight <= 1366);
+
+            if (isMobile) {
+                document.body.style.overflow = 'hidden';
+                const warning = document.createElement('div');
+                warning.style.position = 'fixed';
+                warning.style.top = '0';
+                warning.style.left = '0';
+                warning.style.width = '100vw';
+                warning.style.height = '100vh';
+                warning.style.backgroundColor = 'rgba(15, 23, 42, 0.98)';
+                warning.style.backdropFilter = 'blur(12px)';
+                warning.style.zIndex = '9999';
+                warning.style.display = 'flex';
+                warning.style.flexDirection = 'column';
+                warning.style.alignItems = 'center';
+                warning.style.justifyContent = 'center';
+                warning.style.color = 'white';
+                warning.style.padding = '2rem';
+                warning.style.textAlign = 'center';
+                warning.style.fontFamily = 'sans-serif';
+
+                warning.innerHTML = `
+                    <div style="background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); padding: 3rem; rounded: 2rem; border-radius: 2rem; max-width: 500px; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);">
+                        <div style="background: #ef4444; width: 80px; height: 80px; border-radius: 50%; display: flex; items-center; justify-content: center; margin: 0 auto 2rem; border: 4px solid rgba(239, 68, 68, 0.3);">
+                            <svg style="width: 40px; height: 40px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+                        </div>
+                        <h1 style="font-size: 2rem; font-weight: 800; margin-bottom: 1.5rem; letter-spacing: -0.025em;">Acceso Restringido</h1>
+                        <p style="font-size: 1.125rem; color: #cbd5e1; line-height: 1.6; margin-bottom: 2rem;">
+                            Por motivos de <strong>seguridad avanzada</strong>, el acceso a Lintian Wallet desde dispositivos móviles o tablets no está permitido.
+                        </p>
+                        <div style="height: 1px; background: rgba(255,255,255,0.1); margin-bottom: 2rem;"></div>
+                        <p style="font-size: 0.875rem; color: #94a3b8; font-weight: 500; text-transform: uppercase; letter-spacing: 0.05em;">
+                            Por favor, accede desde un ordenador personal.
+                        </p>
+                    </div>
+                `;
+                document.body.innerHTML = '';
+                document.body.appendChild(warning);
+            }
+        })();
+    </script>
+
     <?= view('plantillas/p_menu.php') ?>
 
     <main class="max-w-7xl mx-auto mt-10 px-4">
@@ -95,8 +142,8 @@
                             </div>
                         </div>
 
-                        <!-- Hover Action Overlays -->
-                        <div class="absolute inset-0 bg-black/40 backdrop-blur-[2px] opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-center justify-center gap-4">
+                        <!-- Hover/Tap Action Overlays -->
+                        <div class="absolute inset-0 bg-black/40 backdrop-blur-[2px] opacity-0 group-hover:opacity-100 group-[.mobile-active]:opacity-100 transition-all duration-300 flex items-center justify-center gap-4 pointer-events-none group-hover:pointer-events-auto group-[.mobile-active]:pointer-events-auto">
                             <button title="Ver/Ocultar Categoría" class="toggle-number-btn p-3 bg-white/20 hover:bg-white/30 rounded-full text-white transition-all transform hover:scale-110">
                                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -138,8 +185,10 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+            // Toggle Card Number
             document.querySelectorAll('.toggle-number-btn').forEach(btn => {
                 btn.addEventListener('click', (e) => {
+                    e.stopPropagation(); // Avoid triggering mobile tap reveal
                     const card = e.currentTarget.closest('.group');
                     const display = card.querySelector('.card-number-display');
 
@@ -150,9 +199,32 @@
                     }
                 });
             });
+
+            // Mobile Interactivity: Tap to Reveal Overlay
+            const cards = document.querySelectorAll('.group.relative.h-56');
+
+            cards.forEach(card => {
+                card.addEventListener('click', (e) => {
+                    // Check if we are on a touch device or small screen
+                    if (window.innerWidth < 1024) {
+                        const isActive = card.classList.contains('mobile-active');
+
+                        // Close all other cards
+                        cards.forEach(c => c.classList.remove('mobile-active'));
+
+                        if (!isActive) {
+                            card.classList.add('mobile-active');
+                        }
+                    }
+                });
+            });
+
+            // Close card overlay when clicking outside
+            document.addEventListener('click', (e) => {
+                if (!e.target.closest('.group')) {
+                    cards.forEach(card => card.classList.remove('mobile-active'));
+                }
+            });
         });
     </script>
 </body>
-
-
-</html>
