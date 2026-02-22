@@ -79,7 +79,7 @@
                                     </div>
                                     <?php foreach ($categorias as $categoria) : ?>
                                         <?php if ($categoria->id == $cuenta->id_categoria) : ?>
-                                            <div class="font-mono text-xl text-white/90 tracking-[0.2em] card-number-display"
+                                            <div class="text-xl font-bold text-white/90 tracking-wide card-number-display"
                                                 data-number="<?= $categoria->nombre ?>">
                                                 ••••
                                             </div>
@@ -132,7 +132,7 @@
                 </div>
                 <h3 class="text-2xl font-bold text-white mb-2">Aún no tienes cuentas</h3>
                 <p class="text-purple-200 mb-8">Comienza a ahorrar creando tu primera cuenta ahora.</p>
-                <button class="px-8 py-3 bg-[#29C6AD] hover:bg-[#23a893] text-white font-bold rounded-full shadow-lg transition-all transform hover:scale-105">
+                <button onclick="window.location.href='<?= base_url('tarjetas/new') ?>'" class="px-8 py-3 bg-[#29C6AD] hover:bg-[#23a893] text-white font-bold rounded-full shadow-lg transition-all transform hover:scale-105">
                     Crear mi primera cuenta
                 </button>
             </div>

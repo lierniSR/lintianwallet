@@ -24,7 +24,7 @@ class C_Tarjeta extends BaseController
         if (session()->get('dni') == null) {
             return redirect()->to('/login');
         }
-        $cuentas = $this->modeloCuentas->findAll();
+        $cuentas = $this->modeloCuentas->where('id_usuario', session()->get('dni'))->findAll();
         $data['cuentas'] = $cuentas;
         $data['usuario'] = $this->modeloUsuario->where('dni', session()->get('dni'))->first();
         $data['categorias'] = $this->modeloCategorias->findAll();
