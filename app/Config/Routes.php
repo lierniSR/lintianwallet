@@ -28,6 +28,11 @@ $routes->get('tarjetas/modificar/(:num)', 'C_Tarjeta::modificarCuenta/$1');
 $routes->post('tarjetas/modificar/(:num)', 'C_Tarjeta::modificarCuenta/$1');
 
 /**
+ * Ingresos
+ */
+$routes->get('ingresos', 'C_Ingreso::index');
+
+/**
  * Traducciones
  */
 $routes->get('jsoncontroller/traducciones', 'C_Json::traducciones');
