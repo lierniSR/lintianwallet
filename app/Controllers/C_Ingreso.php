@@ -62,4 +62,30 @@ class C_Ingreso extends BaseController
 
         return view('ingresos/v_ingresos', $data);
     }
+
+    public function eliminarIngreso()
+    {
+        $dni = session()->get('dni');
+        if ($dni == null) {
+            return redirect()->to('/login');
+        }
+
+        $id = $this->request->getPost('id');
+
+        if ($id) {
+            $ingreso = $this->modeloIngreso->find($id);
+            if ($ingreso) {
+                // Verificar que la cuenta a la que pertenece el ingreso sea de este usuario
+                $cuenta = $this->modeloCuentas->where('id', $ingreso->id_cuenta)
+                                              ->where('id_usuario', $dni)
+                                              ->first();
+                if ($cuenta) {
+                    $this->modeloIngreso->delete($id);
+                    return redirect()->to('/ingresos?cuenta_id=' . $cuenta->id)->with('success', 'Ingreso eliminado correctamente.');
+                }
+            }
+        }
+
+        return redirect()->to('/ingresos')->with('errors', ['No se ha podido eliminar el ingreso o no tienes permisos.']);
+    }
 }
