@@ -44,6 +44,11 @@ $routes->get('gastos/new/(:num)', 'C_Gasto::nuevoGasto/$1');
 $routes->post('gastos/crear', 'C_Gasto::crearGasto');
 
 /**
+ * Movimientos
+ */
+$routes->get('movimientos', 'C_Movimiento::index');
+
+/**
  * Traducciones
  */
 $routes->get('jsoncontroller/traducciones', 'C_Json::traducciones');

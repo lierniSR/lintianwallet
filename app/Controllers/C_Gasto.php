@@ -55,8 +55,11 @@ class C_Gasto extends BaseController
             }
 
             if ($valida) {
-                $data['gastos'] = $this->modeloGasto->where('id_cuenta', $cuenta_seleccionada)
-                    ->orderBy('fecha', 'DESC')
+                // Hacemos JOIN con subcategoria para obtener el nombre real de lo que se ha gastado
+                $data['gastos'] = $this->modeloGasto->select('gastos.*, subcategoria.nombre as subcategoria_nombre')
+                    ->join('subcategoria', 'subcategoria.id = gastos.id_subcategoria', 'left')
+                    ->where('gastos.id_cuenta', $cuenta_seleccionada)
+                    ->orderBy('gastos.fecha', 'DESC')
                     ->findAll();
             } else {
                 $data['gastos'] = [];
