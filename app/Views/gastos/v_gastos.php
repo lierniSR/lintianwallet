@@ -117,7 +117,7 @@ $totalGastos = array_reduce($gastos, function ($carry, $item) {
                                             </svg>
                                         </div>
                                         <div>
-                                            <h4 class="text-white font-bold text-lg leading-tight">Gasto Nº<?= esc($gasto->id) ?></h4>
+                                            <h4 class="text-white font-bold text-lg leading-tight"><?= esc($gasto->subcategoria_nombre ?? 'Gasto Nº' . $gasto->id) ?></h4>
                                             <p class="text-white/50 text-sm font-medium mt-0.5">
                                                 <?= date('d M Y', strtotime($gasto->fecha)) ?> • <span class="text-purple-300">Gasto</span>
                                             </p>
