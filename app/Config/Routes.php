@@ -39,6 +39,9 @@ $routes->post('ingresos/crear', 'C_Ingreso::crearIngreso');
  * Gastos
  */
 $routes->get('gastos', 'C_Gasto::index');
+$routes->post('gastos/eliminar', 'C_Gasto::eliminarGasto');
+$routes->get('gastos/new/(:num)', 'C_Gasto::nuevoGasto/$1');
+$routes->post('gastos/crear', 'C_Gasto::crearGasto');
 
 /**
  * Traducciones
