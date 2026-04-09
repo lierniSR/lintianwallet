@@ -53,13 +53,15 @@ $totalIngresos = array_reduce($ingresos, function ($carry, $item) {
                     </div>
                 <?php endif; ?>
 
-                <!-- Boton (simulado para futuros usos) -->
-                <button class="flex items-center gap-2 px-6 py-3 bg-white/10 hover:bg-white/20 backdrop-blur-md text-white font-bold rounded-2xl border border-white/20 transition-all duration-300 transform hover:-translate-y-1">
+                <!-- Botón para Registrar Nuevo Ingreso -->
+                <?php if (!empty($cuenta_seleccionada)): ?>
+                <a href="<?= base_url('ingresos/new/' . esc($cuenta_seleccionada)) ?>" class="flex items-center gap-2 px-6 py-3 bg-white/10 hover:bg-white/20 backdrop-blur-md text-white font-bold rounded-2xl border border-white/20 transition-all duration-300 transform hover:-translate-y-1">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
                     </svg>
                     Registrar Ingreso
-                </button>
+                </a>
+                <?php endif; ?>
             </div>
         </div>
 
@@ -81,16 +83,17 @@ $totalIngresos = array_reduce($ingresos, function ($carry, $item) {
                     <div class="px-8 py-6 border-b border-white/10 flex justify-between items-center">
                         <div class="flex items-center gap-4">
                             <h3 class="text-xl font-bold text-white">Últimos Movimientos</h3>
-                            <?php if (session()->getFlashdata('success')): ?>
+                            <?php if(session()->getFlashdata('success')): ?>
                                 <div class="flex items-center gap-1.5 animate-pulse bg-green-500/20 px-3 py-1 rounded-full border border-green-500/30 mt-0.5">
                                     <svg class="w-4 h-4 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7" />
                                     </svg>
-                                    <span class="text-sm font-bold text-green-400 uppercase tracking-wide">Eliminado</span>
+                                    <span class="text-sm font-bold text-green-400 uppercase tracking-wide">
+                                        <?= strpos(strtolower(session()->getFlashdata('success')), 'eliminad') !== false ? 'Eliminado' : 'Ingresado' ?>
+                                    </span>
                                 </div>
                             <?php endif; ?>
                         </div>
-                        <span class="text-sm font-medium text-purple-200 cursor-pointer hover:text-white transition-colors">Ver todos</span>
                     </div>
 
                     <div class="p-4 space-y-2">

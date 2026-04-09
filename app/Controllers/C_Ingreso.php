@@ -52,7 +52,9 @@ class C_Ingreso extends BaseController
             }
 
             if ($valida) {
-                $data['ingresos'] = $this->modeloIngreso->where('id_cuenta', $cuenta_seleccionada)->findAll();
+                $data['ingresos'] = $this->modeloIngreso->where('id_cuenta', $cuenta_seleccionada)
+                                                        ->orderBy('fecha', 'DESC')
+                                                        ->findAll();
             } else {
                 $data['ingresos'] = [];
             }
@@ -77,9 +79,13 @@ class C_Ingreso extends BaseController
             if ($ingreso) {
                 // Verificar que la cuenta a la que pertenece el ingreso sea de este usuario
                 $cuenta = $this->modeloCuentas->where('id', $ingreso->id_cuenta)
-                                              ->where('id_usuario', $dni)
-                                              ->first();
+                    ->where('id_usuario', $dni)
+                    ->first();
                 if ($cuenta) {
+                    // Restar el dinero del ingreso al saldo de la cuenta al borrarlo
+                    $nuevoSaldo = $cuenta->saldoTotal - $ingreso->dinero;
+                    $this->modeloCuentas->update($cuenta->id, ['saldoTotal' => $nuevoSaldo]);
+
                     $this->modeloIngreso->delete($id);
                     return redirect()->to('/ingresos?cuenta_id=' . $cuenta->id)->with('success', 'Ingreso eliminado correctamente.');
                 }
@@ -88,4 +94,75 @@ class C_Ingreso extends BaseController
 
         return redirect()->to('/ingresos')->with('errors', ['No se ha podido eliminar el ingreso o no tienes permisos.']);
     }
+
+    public function nuevoIngreso($id_cuenta)
+    {
+        $dni = session()->get('dni');
+        if ($dni == null) {
+            return redirect()->to('/login');
+        }
+
+        $data = [
+            'dni' => $dni,
+            'id_cuenta' => $id_cuenta,
+        ];
+
+        return view('ingresos/v_newingresos', $data);
+    }
+
+    public function crearIngreso()
+    {
+        $dni = session()->get('dni');
+        if ($dni == null) {
+            return redirect()->to('/login');
+        }
+
+        $rules = [
+            'dinero' => [
+                'rules'  => 'required|greater_than_equal_to[0.01]',
+                'errors' => [
+                    'required' => 'La cantidad es obligatoria.',
+                    'greater_than_equal_to' => 'El ingreso debe ser de al menos 0.01€ y no puede ser 0.',
+                ],
+            ],
+            'fecha' => [
+                'rules'  => 'required|valid_date',
+                'errors' => [
+                    'required' => 'La fecha es obligatoria.',
+                    'valid_date' => 'La fecha no es válida.',
+                ],
+            ]
+        ];
+
+        if (!$this->validate($rules)) {
+            return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
+        }
+
+        $id_cuenta = $this->request->getPost('id_cuenta');
+
+        // Seguridad extra: verificar que la cuenta es real y pertenece a este usuario
+        $cuenta = $this->modeloCuentas->where('id', $id_cuenta)
+                                      ->where('id_usuario', $dni)
+                                      ->first();
+
+        if (!$cuenta) {
+            return redirect()->to('/ingresos')->with('errors', ['La cuenta seleccionada no es válida o no te pertenece.']);
+        }
+
+        // Insertar en la BD
+        $dataInsert = [
+            'dinero'    => $this->request->getPost('dinero'),
+            'fecha'     => $this->request->getPost('fecha'),
+            'id_cuenta' => $id_cuenta
+        ];
+
+        $this->modeloIngreso->insert($dataInsert);
+
+        // Sumar el dinero ingresado al saldo total de esa cuenta específica
+        $nuevoSaldo = $cuenta->saldoTotal + $dataInsert['dinero'];
+        $this->modeloCuentas->update($id_cuenta, ['saldoTotal' => $nuevoSaldo]);
+
+        return redirect()->to('/ingresos?cuenta_id=' . $id_cuenta)->with('success', 'Ingreso registrado correctamente.');
+    }
+
 }
