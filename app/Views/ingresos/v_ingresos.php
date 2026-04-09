@@ -31,31 +31,37 @@ $totalIngresos = array_reduce($ingresos, function ($carry, $item) {
             <div class="flex items-center gap-4">
                 <!-- Select de Cuentas -->
                 <?php if (!empty($cuentas)): ?>
-                <div class="relative group">
-                    <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                        <svg class="w-5 h-5 text-white/50" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/></svg>
+                    <div class="relative group">
+                        <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                            <svg class="w-5 h-5 text-white/50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
+                            </svg>
+                        </div>
+                        <select onchange="window.location.href='<?= base_url('ingresos') ?>?cuenta_id=' + this.value" class="appearance-none w-full md:min-w-[300px] pl-11 pr-10 py-3 bg-white/10 hover:bg-white/20 backdrop-blur-md rounded-2xl border border-white/20 text-white font-medium focus:outline-none focus:ring-2 focus:ring-[#29C6AD]/50 transition-all cursor-pointer">
+                            <?php foreach ($cuentas as $c): ?>
+                                <!-- Mostramos ID de tarjeta como indicativo básico -->
+                                <option value="<?= $c->id ?>" <?= ($c->id == $cuenta_seleccionada) ? 'selected' : '' ?> class="bg-purple-800 text-white">
+                                    <?= esc($c->categoria_nombre ?? 'Cuenta Nº' . $c->id) ?> - <?= number_format($c->saldoTotal, 2, ',', '.') ?>€
+                                </option>
+                            <?php endforeach; ?>
+                        </select>
+                        <div class="absolute inset-y-0 right-0 pr-4 flex items-center pointer-events-none">
+                            <svg class="w-4 h-4 text-white/50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </div>
                     </div>
-                    <select onchange="window.location.href='<?= base_url('ingresos') ?>?cuenta_id=' + this.value" class="appearance-none w-full md:min-w-[300px] pl-11 pr-10 py-3 bg-white/10 hover:bg-white/20 backdrop-blur-md rounded-2xl border border-white/20 text-white font-medium focus:outline-none focus:ring-2 focus:ring-[#29C6AD]/50 transition-all cursor-pointer">
-                        <?php foreach($cuentas as $c): ?>
-                            <!-- Mostramos ID de tarjeta como indicativo básico -->
-                            <option value="<?= $c->id ?>" <?= ($c->id == $cuenta_seleccionada) ? 'selected' : '' ?> class="bg-purple-800 text-white">
-                                <?= esc($c->categoria_nombre ?? 'Cuenta Nº' . $c->id) ?> - <?= number_format($c->saldoTotal, 2, ',', '.') ?>€
-                            </option>
-                        <?php endforeach; ?>
-                    </select>
-                    <div class="absolute inset-y-0 right-0 pr-4 flex items-center pointer-events-none">
-                        <svg class="w-4 h-4 text-white/50" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
-                    </div>
-                </div>
                 <?php endif; ?>
 
-                <!-- Boton (simulado para futuros usos) -->
-                <button class="flex items-center gap-2 px-6 py-3 bg-white/10 hover:bg-white/20 backdrop-blur-md text-white font-bold rounded-2xl border border-white/20 transition-all duration-300 transform hover:-translate-y-1">
+                <!-- Botón para Registrar Nuevo Ingreso -->
+                <?php if (!empty($cuenta_seleccionada)): ?>
+                <a href="<?= base_url('ingresos/new/' . esc($cuenta_seleccionada)) ?>" class="flex items-center gap-2 px-6 py-3 bg-white/10 hover:bg-white/20 backdrop-blur-md text-white font-bold rounded-2xl border border-white/20 transition-all duration-300 transform hover:-translate-y-1">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
                     </svg>
                     Registrar Ingreso
-                </button>
+                </a>
+                <?php endif; ?>
             </div>
         </div>
 
@@ -75,8 +81,19 @@ $totalIngresos = array_reduce($ingresos, function ($carry, $item) {
             <div class="lg:col-span-2">
                 <div class="bg-white/10 backdrop-blur-xl border border-white/20 rounded-3xl shadow-2xl overflow-hidden min-h-[500px]">
                     <div class="px-8 py-6 border-b border-white/10 flex justify-between items-center">
-                        <h3 class="text-xl font-bold text-white">Últimos Movimientos</h3>
-                        <span class="text-sm font-medium text-purple-200 cursor-pointer hover:text-white transition-colors">Ver todos</span>
+                        <div class="flex items-center gap-4">
+                            <h3 class="text-xl font-bold text-white">Últimos Movimientos</h3>
+                            <?php if(session()->getFlashdata('success')): ?>
+                                <div class="flex items-center gap-1.5 animate-pulse bg-green-500/20 px-3 py-1 rounded-full border border-green-500/30 mt-0.5">
+                                    <svg class="w-4 h-4 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7" />
+                                    </svg>
+                                    <span class="text-sm font-bold text-green-400 uppercase tracking-wide">
+                                        <?= strpos(strtolower(session()->getFlashdata('success')), 'eliminad') !== false ? 'Eliminado' : 'Ingresado' ?>
+                                    </span>
+                                </div>
+                            <?php endif; ?>
+                        </div>
                     </div>
 
                     <div class="p-4 space-y-2">
@@ -110,7 +127,7 @@ $totalIngresos = array_reduce($ingresos, function ($carry, $item) {
                                         <p class="text-[#29C6AD] font-bold text-xl drop-shadow-sm group-hover:drop-shadow-md transition-all">+<?= number_format($ingreso->dinero, 2, ',', '.') ?>€</p>
 
                                         <!-- Formulario simulado para eliminar (o simple botón) -->
-                                        <form action="#" method="POST" class="m-0" onsubmit="return confirm('¿Estás seguro de que quieres eliminar este ingreso?');">
+                                        <form action="<?= base_url('ingresos/eliminar') ?>" method="POST" class="m-0" onsubmit="return confirm('¿Estás seguro de que quieres eliminar este ingreso?');">
                                             <!-- Simulamos el ID -->
                                             <input type="hidden" name="id" value="<?= $ingreso->id ?>">
                                             <button type="submit" class="p-2 bg-black/20 text-white/40 hover:text-white hover:bg-red-500 rounded-full transition-all duration-300 opacity-50 group-hover:opacity-100" title="Eliminar Ingreso">

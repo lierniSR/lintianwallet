@@ -31,6 +31,9 @@ $routes->post('tarjetas/modificar/(:num)', 'C_Tarjeta::modificarCuenta/$1');
  * Ingresos
  */
 $routes->get('ingresos', 'C_Ingreso::index');
+$routes->post('ingresos/eliminar', 'C_Ingreso::eliminarIngreso');
+$routes->get('ingresos/new/(:num)', 'C_Ingreso::nuevoIngreso/$1');
+$routes->post('ingresos/crear', 'C_Ingreso::crearIngreso');
 
 /**
  * Traducciones
