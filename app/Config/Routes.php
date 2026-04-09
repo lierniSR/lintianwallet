@@ -36,6 +36,11 @@ $routes->get('ingresos/new/(:num)', 'C_Ingreso::nuevoIngreso/$1');
 $routes->post('ingresos/crear', 'C_Ingreso::crearIngreso');
 
 /**
+ * Gastos
+ */
+$routes->get('gastos', 'C_Gasto::index');
+
+/**
  * Traducciones
  */
 $routes->get('jsoncontroller/traducciones', 'C_Json::traducciones');
