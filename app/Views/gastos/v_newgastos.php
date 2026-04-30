@@ -12,7 +12,7 @@
 <body class="relative min-h-screen bg-gradient-to-b from-purple-600 via-purple-700 to-blue-900 pb-12 font-sans selection:bg-[#ef4444]/30 flex flex-col">
     <?= view('plantillas/p_menu.php') ?>
 
-    <!-- === Contenedor Principal: Centrado absoluto en toda la página === -->
+    <!-- === Formulario de Inserción: Registro de nuevos gastos === -->
     <main class="flex-grow flex items-center justify-center px-4 py-16 md:py-24">
         <div class="w-full max-w-lg bg-white/10 backdrop-blur-xl rounded-3xl border border-white/20 shadow-2xl overflow-hidden transform transition-all">
             <div class="p-8 md:p-10">

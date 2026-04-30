@@ -11,6 +11,7 @@ $d_inactive = "text-gray-600 font-medium hover:text-purple-600 hover:bg-purple-5
 
 // Clases base y dinámicas para el menú Móvil
 $m_base = "flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-300";
+// Lógica para determinar la página activa y estilos CSS reutilizables para los menús
 $m_active = "text-purple-700 bg-purple-100 font-semibold shadow-sm translate-x-2 ring-1 ring-purple-200";
 $m_inactive = "text-gray-600 font-medium hover:bg-purple-50 hover:text-purple-600";
 ?>

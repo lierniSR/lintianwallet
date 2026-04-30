@@ -11,7 +11,7 @@
 </head>
 
 <body class="relative min-h-screen bg-gradient-to-b from-purple-600 via-purple-700 to-blue-900 px-4 py-8 md:p-10 flex flex-col items-center justify-center">
-    <!-- Bloqueo de Seguridad para Móviles/Tablets -->
+    <!-- Bloqueo de Seguridad: Impide el acceso desde dispositivos móviles por políticas de seguridad -->
     <script>
         (function() {
             const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
@@ -112,7 +112,7 @@
 
         <!-- Decoration/Background blobs could be added here if needed, but keeping it clean per request -->
 
-        <!-- === Div izquierdo: Información de la Aplicación y Logo === -->
+        <!-- === Columna Izquierda: Identidad Visual y Eslogan === -->
         <div class="flex flex-col items-center justify-center w-full h-full order-1 md:order-none mt-6 md:mt-0">
             <h1 id="tituloApp" data-tr="tituloApp" class="text-3xl lg:text-4xl font-bold text-center text-gray-800 mb-4 transition-all duration-300"><?= tr('tituloApp') ?? 'LintianWallet' ?></h1>
 
@@ -134,7 +134,7 @@
         <!-- En móvil (sm) la línea es en horizontal, en escritorio (md) se transpone a formato vertical -->
         <div class="w-full h-px md:w-px md:h-64 bg-gray-200 md:bg-gradient-to-b md:from-transparent md:via-gray-300 md:to-transparent order-2 md:order-none my-2 md:my-0"></div>
 
-        <!-- Div derecho: Login Form -->
+        <!-- === Columna Derecha: Formulario de Acceso === -->
         <div class="flex flex-col items-center justify-center w-full h-full order-3 md:order-none">
             <h1 class="text-3xl lg:text-4xl font-bold text-center text-gray-800 mb-8 mt-10" id="titulo" data-tr="tituloLogin"><?= tr('tituloLogin') ?? 'INICIAR SESION' ?></h1>
 

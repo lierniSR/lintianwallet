@@ -155,7 +155,7 @@
                 </div>
             </section>
 
-            <!-- === Sección: Sesión (Ancho Completo) === -->
+            <!-- === Sección: Sesión (Cierre de sesión seguro) === -->
             <section class="md:col-span-2 bg-red-500/10 backdrop-blur-md rounded-3xl border border-red-500/20 p-8 shadow-xl flex flex-col md:flex-row items-center justify-between gap-6">
                 <div>
                     <h2 class="text-xl font-bold text-white" data-tr="tituloGestionSesion"><?= tr('tituloGestionSesion') ?? 'Gestión de Sesión' ?></h2>

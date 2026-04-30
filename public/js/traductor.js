@@ -2,9 +2,13 @@
  * SCRIPT DE TRADUCCIÓN AUTOMÁTICA (Lintian Wallet)
  */
 
+// Referencia global a la función de traducción para uso externo
 let globalTranslatePage = null;
 
-async function initTraductor() {
+/**
+ * Inicializa el motor de traducción del cliente.
+ * Carga el idioma guardado, los diccionarios y activa la detección de cambios.
+ */
     const selectIdioma = document.getElementById("selectIdioma");
     const savedLang = localStorage.getItem("idioma") || "es";
     
@@ -34,6 +38,10 @@ async function initTraductor() {
         }
     };
 
+    /**
+     * Traduce todos los elementos con atributos data-tr y data-tr-title de la página.
+     * @param {string} lang - Código de idioma (es, eu, en, etc.)
+     */
     const translatePage = async (lang) => {
         localStorage.setItem("idioma", lang);
         // Guardamos también en una cookie para que PHP pueda leerlo

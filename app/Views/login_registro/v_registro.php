@@ -11,7 +11,7 @@
 
 <body class="relative min-h-screen bg-gradient-to-b from-purple-600 via-purple-700 to-blue-900 px-4 py-8 md:p-10 flex flex-col items-center justify-center">
 
-    <!-- === Contenedor padre principal === -->
+    <!-- === Contenedor Principal: Estructura dividida para Branding y Registro === -->
     <div class="flex flex-col md:grid md:grid-cols-[1fr_auto_1fr] items-center justify-center w-full max-w-sm md:max-w-5xl h-auto p-6 md:p-10 bg-white rounded-xl shadow-2xl gap-8 md:gap-8 lg:gap-12 relative overflow-hidden">
 
         <!-- Language Selector: Back inside the card, but with space -->

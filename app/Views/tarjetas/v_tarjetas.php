@@ -154,7 +154,7 @@
         <?php endif ?>
     </main>
 
-    <!-- Lógica en JavaScript para ocultar/mostrar número de la tarjeta y animaciones en móviles -->
+    <!-- Lógica local para la interactividad de las tarjetas (ocultar saldo y efectos en móviles) -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             // Toggle Card Number
