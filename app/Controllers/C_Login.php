@@ -41,7 +41,7 @@ class C_Login extends BaseController
 
         // Si todo está bien, guardamos su DNI en la sesión "como una pulsera VIP" para dejarle pasar
         session()->set('dni', $usuario->dni);
-        
+
         // ¡Adentro! Lo enviamos a la vista de sus tarjetas
         return redirect()->to('/tarjetas');
     }
@@ -112,8 +112,15 @@ class C_Login extends BaseController
 
         // Insertamos el nuevo usuario
         $this->modeloUsuario->insert($data);
-        
+
         // Lo mandamos al inicio de sesión para que entre con su cuenta recién hecha
+        return redirect()->to('/login');
+    }
+
+    // Cierra la sesión del usuario y lo manda de vuelta al login
+    public function logout()
+    {
+        session()->destroy();
         return redirect()->to('/login');
     }
 }

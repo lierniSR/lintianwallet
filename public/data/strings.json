@@ -9,7 +9,19 @@
         "apellido": "Apellido",
         "gmail": "Gmail",
         "fotoPerfil": "Foto de perfil",
-        "contrasenia": "Contraseña"
+        "contrasenia": "Contraseña",
+        "Usuario no encontrado": "Usuario no encontrado",
+        "Contraseña incorrecta": "Contraseña incorrecta",
+        "El DNI es obligatorio.": "El DNI es obligatorio.",
+        "El formato del DNI no es válido (ej. 12345678A).": "El formato del DNI no es válido (ej. 12345678A).",
+        "El DNI ya está registrado.": "El DNI ya está registrado.",
+        "El nombre es obligatorio.": "El nombre es obligatorio.",
+        "El nombre es demasiado corto.": "El nombre es demasiado corto.",
+        "El apellido es obligatorio.": "El apellido es obligatorio.",
+        "El correo es obligatorio.": "El correo es obligatorio.",
+        "El formato del correo no es válido.": "El formato del correo no es válido.",
+        "La contraseña es obligatoria.": "La contraseña es obligatoria.",
+        "La contraseña debe tener al menos 4 caracteres.": "La contraseña debe tener al menos 4 caracteres."
     },
     "eu": {
         "tituloLogin": "SESIOA HASI",
@@ -21,6 +33,18 @@
         "apellido": "Abizena",
         "gmail": "Gmail-a",
         "fotoPerfil": "Perfileko argazkia",
-        "contrasenia": "Pasahitza"
+        "contrasenia": "Pasahitza",
+        "Usuario no encontrado": "Erabiltzailea ez da aurkitu",
+        "Contraseña incorrecta": "Pasahitz okerra",
+        "El DNI es obligatorio.": "NAN-a derrigorrezkoa da.",
+        "El formato del DNI no es válido (ej. 12345678A).": "NAN-aren formatua ez da zuzena (adib. 12345678A).",
+        "El DNI ya está registrado.": "NAN-a erregistratuta dago jada.",
+        "El nombre es obligatorio.": "Izena derrigorrezkoa da.",
+        "El nombre es demasiado corto.": "Izena motzegia da.",
+        "El apellido es obligatorio.": "Abizena derrigorrezkoa da.",
+        "El correo es obligatorio.": "Posta elektronikoa derrigorrezkoa da.",
+        "El formato del correo no es válido.": "Posta elektronikoaren formatua ez da zuzena.",
+        "La contraseña es obligatoria.": "Pasahitza derrigorrezkoa da.",
+        "La contraseña debe tener al menos 4 caracteres.": "Pasahitzak gutxienez 4 karaktere izan behar ditu."
     }
 }

@@ -40,7 +40,7 @@
                 <!-- FORMULARIO: Insercción a la base de datos hacia C_Ingreso -->
                 <?= form_open('ingresos/crear', ['class' => 'space-y-6']) ?>
                 <!-- Hidden inputs -->
-                <input type="hidden" name="id_cuenta" value="<?= esc($id_cuenta) ?>">
+                <input type="hidden" name="id_cuenta" value="<?= esc($id_cuenta ?? '') ?>">
 
                 <!-- Dinero a ingresar -->
                 <div class="space-y-2 group">
@@ -79,7 +79,7 @@
                         Añadir Ingreso
                     </button>
                     <!-- El botón volver usa javascript para ir a la cuenta concreta o base_url('ingresos') -->
-                    <a href="<?= base_url('ingresos?cuenta_id=' . esc($id_cuenta)) ?>"
+                    <a href="<?= base_url('ingresos?cuenta_id=' . esc($id_cuenta ?? '')) ?>"
                         class="w-full py-4 bg-white/5 hover:bg-white/10 text-white font-bold rounded-2xl border border-white/10 transition-all text-center text-lg">
                         Volver
                     </a>

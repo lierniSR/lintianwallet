@@ -60,13 +60,50 @@ $m_inactive = "text-gray-600 font-medium hover:bg-purple-50 hover:text-purple-60
                     </a>
                 </li>
                 <li>
-                    <!-- Mantenemos /registro para la configuración temporalmente -->
-                    <a href="/registro" class="<?= $d_base ?> <?= $isActive('registro') ? $d_active : $d_inactive ?> !px-2">
+                    <a href="<?= base_url('configuracion') ?>" class="<?= $d_base ?> <?= $isActive('configuracion') ? $d_active : $d_inactive ?> !px-2">
                         <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                         </svg>
                     </a>
+                </li>
+
+                <!-- Selector de Idioma -->
+                <li class="relative ml-2 lang-dropdown-container">
+                    <button onclick="toggleLangMenu(this)" class="flex items-center gap-2 px-3 py-2 bg-gray-50 hover:bg-gray-100 rounded-xl border border-gray-200 transition-all cursor-pointer">
+                        <img class="lang-display-flag w-5 h-auto rounded-sm" src="https://flagcdn.com/w20/es.png" alt="flag">
+                        <span class="lang-display-text text-xs font-bold text-gray-600 uppercase">ES</span>
+                        <svg class="w-3 h-3 text-gray-400 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                        </svg>
+                    </button>
+                    <!-- Dropdown -->
+                    <div class="lang-dropdown-menu hidden absolute right-0 mt-2 w-40 bg-white rounded-2xl shadow-xl border border-gray-100 py-2 z-50 transition-all">
+                        <button onclick="cambiarIdioma('es')" class="w-full flex items-center gap-3 px-4 py-2 hover:bg-purple-50 text-gray-700 text-sm font-medium transition-colors text-left">
+                            <img src="https://flagcdn.com/w20/es.png" class="w-5 h-auto rounded-sm" alt="ES"> Español
+                        </button>
+                        <button onclick="cambiarIdioma('eu')" class="w-full flex items-center gap-3 px-4 py-2 hover:bg-purple-50 text-gray-700 text-sm font-medium transition-colors text-left">
+                            <img src="<?= base_url('img/flags/euskara.jpg') ?>" class="w-5 h-auto rounded-sm" alt="EU"> Euskara
+                        </button>
+                        <button onclick="cambiarIdioma('en')" class="w-full flex items-center gap-3 px-4 py-2 hover:bg-purple-50 text-gray-700 text-sm font-medium transition-colors text-left">
+                            <img src="https://flagcdn.com/w20/gb.png" class="w-5 h-auto rounded-sm" alt="EN"> English
+                        </button>
+                        <button onclick="cambiarIdioma('fr')" class="w-full flex items-center gap-3 px-4 py-2 hover:bg-purple-50 text-gray-700 text-sm font-medium transition-colors text-left">
+                            <img src="https://flagcdn.com/w20/fr.png" class="w-5 h-auto rounded-sm" alt="FR"> Français
+                        </button>
+                        <button onclick="cambiarIdioma('pt')" class="w-full flex items-center gap-3 px-4 py-2 hover:bg-purple-50 text-gray-700 text-sm font-medium transition-colors text-left">
+                            <img src="https://flagcdn.com/w20/pt.png" class="w-5 h-auto rounded-sm" alt="PT"> Português
+                        </button>
+                        <button onclick="cambiarIdioma('it')" class="w-full flex items-center gap-3 px-4 py-2 hover:bg-purple-50 text-gray-700 text-sm font-medium transition-colors text-left">
+                            <img src="https://flagcdn.com/w20/it.png" class="w-5 h-auto rounded-sm" alt="IT"> Italiano
+                        </button>
+                        <button onclick="cambiarIdioma('zh-TW')" class="w-full flex items-center gap-3 px-4 py-2 hover:bg-purple-50 text-gray-700 text-sm font-medium transition-colors text-left">
+                            <img src="https://flagcdn.com/w20/tw.png" class="w-5 h-auto rounded-sm" alt="ZH"> Chino
+                        </button>
+                        <button onclick="cambiarIdioma('ja')" class="w-full flex items-center gap-3 px-4 py-2 hover:bg-purple-50 text-gray-700 text-sm font-medium transition-colors text-left">
+                            <img src="https://flagcdn.com/w20/jp.png" class="w-5 h-auto rounded-sm" alt="JA"> Japonés
+                        </button>
+                    </div>
                 </li>
             </ul>
 
@@ -119,13 +156,42 @@ $m_inactive = "text-gray-600 font-medium hover:bg-purple-50 hover:text-purple-60
                     </a>
                 </li>
                 <li>
-                    <a href="/registro" class="<?= $m_base ?> <?= $isActive('registro') ? $m_active : $m_inactive ?>">
+                    <a href="<?= base_url('configuracion') ?>" class="<?= $m_base ?> <?= $isActive('configuracion') ? $m_active : $m_inactive ?>">
                         <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                         </svg>
                         Configuración
                     </a>
+                </li>
+                <li class="pt-4 mt-4 border-t border-gray-100">
+                    <p class="px-4 text-xs font-bold text-gray-400 uppercase tracking-widest mb-2">Idioma</p>
+                    <div class="grid grid-cols-2 gap-2 px-2">
+                        <button onclick="cambiarIdioma('es')" class="flex items-center gap-2 p-3 rounded-xl bg-gray-50 text-sm font-medium text-gray-600">
+                            <img src="https://flagcdn.com/w20/es.png" class="w-5 h-auto rounded-sm" alt="ES"> ES
+                        </button>
+                        <button onclick="cambiarIdioma('eu')" class="flex items-center gap-2 p-3 rounded-xl bg-gray-50 text-sm font-medium text-gray-600">
+                            <img src="<?= base_url('img/flags/euskara.jpg') ?>" class="w-5 h-auto rounded-sm" alt="EU"> EU
+                        </button>
+                        <button onclick="cambiarIdioma('en')" class="flex items-center gap-2 p-3 rounded-xl bg-gray-50 text-sm font-medium text-gray-600">
+                            <img src="https://flagcdn.com/w20/gb.png" class="w-5 h-auto rounded-sm" alt="EN"> EN
+                        </button>
+                        <button onclick="cambiarIdioma('fr')" class="flex items-center gap-2 p-3 rounded-xl bg-gray-50 text-sm font-medium text-gray-600">
+                            <img src="https://flagcdn.com/w20/fr.png" class="w-5 h-auto rounded-sm" alt="FR"> FR
+                        </button>
+                        <button onclick="cambiarIdioma('pt')" class="flex items-center gap-2 p-3 rounded-xl bg-gray-50 text-sm font-medium text-gray-600">
+                            <img src="https://flagcdn.com/w20/pt.png" class="w-5 h-auto rounded-sm" alt="PT"> PT
+                        </button>
+                        <button onclick="cambiarIdioma('it')" class="flex items-center gap-2 p-3 rounded-xl bg-gray-50 text-sm font-medium text-gray-600">
+                            <img src="https://flagcdn.com/w20/it.png" class="w-5 h-auto rounded-sm" alt="IT"> IT
+                        </button>
+                        <button onclick="cambiarIdioma('zh-TW')" class="flex items-center gap-2 p-3 rounded-xl bg-gray-50 text-sm font-medium text-gray-600">
+                            <img src="https://flagcdn.com/w20/tw.png" class="w-5 h-auto rounded-sm" alt="ZH"> ZH
+                        </button>
+                        <button onclick="cambiarIdioma('ja')" class="flex items-center gap-2 p-3 rounded-xl bg-gray-50 text-sm font-medium text-gray-600">
+                            <img src="https://flagcdn.com/w20/jp.png" class="w-5 h-auto rounded-sm" alt="JA"> JA
+                        </button>
+                    </div>
                 </li>
             </ul>
         </div>
@@ -154,3 +220,5 @@ $m_inactive = "text-gray-600 font-medium hover:bg-purple-50 hover:text-purple-60
         });
     });
 </script>
+<script>const LINTIAN_BASE_URL = '<?= base_url() ?>';</script>
+<script src="<?= base_url('js/traductor.js') ?>"></script>
