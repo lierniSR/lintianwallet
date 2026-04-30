@@ -55,10 +55,11 @@
             <!-- === Sección: Ajustes de Cuenta === -->
             <section class="bg-white/10 backdrop-blur-md rounded-3xl border border-white/20 p-8 shadow-xl">
                 <div class="flex items-center gap-3 mb-6">
-                    <div class="p-2 bg-blue-500/20 rounded-lg">
-                        <svg class="w-6 h-6 text-blue-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                        </svg>
+                    <div class="relative group">
+                        <div class="absolute -inset-0.5 bg-gradient-to-r from-blue-600 to-cyan-600 rounded-full blur opacity-20 group-hover:opacity-40 transition duration-300"></div>
+                        <img src="<?= base_url('usuario/foto/' . session()->get('dni')) ?>" 
+                             alt="Perfil" 
+                             class="relative h-10 w-10 rounded-full object-cover border-2 border-white shadow-sm ring-1 ring-gray-200">
                     </div>
                     <h2 class="text-xl font-bold text-white">Tu Cuenta</h2>
                 </div>
@@ -146,7 +147,7 @@
                                     <img src="https://flagcdn.com/w20/tw.png" class="w-5 h-auto rounded-sm" alt="ZH"> Chino
                                 </button>
                                 <button onclick="cambiarIdioma('ja')" class="w-full flex items-center gap-3 px-4 py-3 hover:bg-purple-50 text-gray-700 text-sm font-medium transition-colors text-left">
-                                    <img src="https://flagcdn.com/w20/jp.png" class="w-5 h-auto rounded-sm" alt="JA"> Japonés
+                                    <img src="https://flagcdn.com/w20/jp.png" class="w-5 h-auto rounded-sm border border-gray-200 shadow-sm" alt="JA"> Japonés
                                 </button>
                             </div>
                         </div>

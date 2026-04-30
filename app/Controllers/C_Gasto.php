@@ -148,6 +148,41 @@ class C_Gasto extends BaseController
             return redirect()->to('/login');
         }
 
+        // Si el usuario eligió "Otro...", creamos o reutilizamos la subcategoría al vuelo
+        $id_subcategoria_final = null;
+
+        if ($this->request->getPost('id_subcategoria') === 'otro') {
+            $nombreNuevo = trim($this->request->getPost('nueva_subcategoria') ?? '');
+
+            if (empty($nombreNuevo)) {
+                return redirect()->back()->withInput()->with('errors', ['id_subcategoria' => 'Debes escribir un nombre para la nueva subcategoría.']);
+            }
+
+            // Necesitamos el id_categoria de la cuenta para enlazar correctamente la nueva subcategoría
+            $id_cuenta_tmp = $this->request->getPost('id_cuenta');
+            $cuenta_tmp    = $this->modeloCuentas->find($id_cuenta_tmp);
+
+            if (!$cuenta_tmp) {
+                return redirect()->back()->withInput()->with('errors', ['id_subcategoria' => 'No se pudo determinar la categoría de la cuenta.']);
+            }
+
+            // Si ya existe con ese nombre en esta categoría, reutilizamos su ID
+            $existente = $this->modeloSubcategoria
+                ->where('nombre', $nombreNuevo)
+                ->where('id_categoria', $cuenta_tmp->id_categoria)
+                ->first();
+
+            if ($existente) {
+                $id_subcategoria_final = $existente->id;
+            } else {
+                $this->modeloSubcategoria->insert([
+                    'nombre'       => $nombreNuevo,
+                    'id_categoria' => $cuenta_tmp->id_categoria
+                ]);
+                $id_subcategoria_final = $this->modeloSubcategoria->insertID();
+            }
+        }
+
         // Barreras lógicas (CodeIgniter Rules)
         $rules = [
             'dinero' => [
@@ -164,17 +199,20 @@ class C_Gasto extends BaseController
                     'valid_date' => 'La fecha no es válida.',
                 ],
             ],
-            'id_subcategoria' => [
+        ];
+
+        // Solo validamos id_subcategoria si NO acabamos de crearla
+        if ($id_subcategoria_final === null) {
+            $rules['id_subcategoria'] = [
                 'rules'  => 'required|is_not_unique[subcategoria.id]',
                 'errors' => [
                     'required'      => 'La subcategoría es obligatoria.',
                     'is_not_unique' => 'La subcategoría seleccionada no es válida en la base de datos.',
                 ],
-            ],
-        ];
+            ];
+        }
 
         if (!$this->validate($rules)) {
-            // Te tiramos directo pa' atrás con todo pitando
             return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
         }
 
@@ -189,12 +227,15 @@ class C_Gasto extends BaseController
             return redirect()->to('/gastos')->with('errors', ['La cuenta seleccionada no es válida.']);
         }
 
+        // Usamos el ID definitivo: el de la nueva subcategoría, o el del select
+        $id_subcategoria = $id_subcategoria_final ?? $this->request->getPost('id_subcategoria');
+
         // Metemos nuestros campos envasados al vacío listos
         $dataInsert = [
             'dinero'          => $this->request->getPost('dinero'),
             'fecha'           => $this->request->getPost('fecha'),
             'id_cuenta'       => $id_cuenta,
-            'id_subcategoria' => $this->request->getPost('id_subcategoria')
+            'id_subcategoria' => $id_subcategoria
         ];
 
         // Impacto a tabla Gastos 

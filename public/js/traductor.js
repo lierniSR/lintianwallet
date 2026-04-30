@@ -71,6 +71,7 @@ async function initTraductor() {
         allDisplayFlags.forEach(el => {
             el.src = flags[lang] || 'https://flagcdn.com/w20/un.png';
             el.alt = lang;
+            el.classList.add('border', 'border-gray-200', 'shadow-sm');
         });
 
         if (!translations) {

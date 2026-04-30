@@ -68,40 +68,50 @@ $m_inactive = "text-gray-600 font-medium hover:bg-purple-50 hover:text-purple-60
                     </a>
                 </li>
 
-                <!-- Selector de Idioma -->
-                <li class="relative ml-2 lang-dropdown-container">
-                    <button onclick="toggleLangMenu(this)" class="flex items-center gap-2 px-3 py-2 bg-gray-50 hover:bg-gray-100 rounded-xl border border-gray-200 transition-all cursor-pointer">
-                        <img class="lang-display-flag w-5 h-auto rounded-sm" src="https://flagcdn.com/w20/es.png" alt="flag">
-                        <span class="lang-display-text text-xs font-bold text-gray-600 uppercase">ES</span>
-                        <svg class="w-3 h-3 text-gray-400 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-                        </svg>
-                    </button>
+                <li class="flex items-center gap-3 ml-4 pl-4 border-l border-gray-200">
+                    <!-- Foto de Perfil Redonda -->
+                    <?php if (session()->get('dni')): ?>
+                        <div class="relative group">
+                            <div class="absolute -inset-0.5 bg-gradient-to-r from-purple-600 to-blue-600 rounded-full blur opacity-20 group-hover:opacity-40 transition duration-300"></div>
+                            <img src="<?= base_url('usuario/foto/' . session()->get('dni')) ?>" 
+                                 alt="Perfil" 
+                                 class="relative h-9 w-9 rounded-full object-cover border-2 border-white shadow-sm ring-1 ring-gray-100">
+                        </div>
+                    <?php endif; ?>
+
+                    <!-- Selector de Idioma (Solo Banderas) -->
+                    <div class="relative lang-dropdown-container">
+                        <button onclick="toggleLangMenu(this)" class="flex items-center justify-center p-1.5 bg-gray-50 hover:bg-gray-100 rounded-lg border border-gray-200 transition-all cursor-pointer">
+                            <img class="lang-display-flag w-5 h-auto rounded-sm border border-gray-200 shadow-sm" src="https://flagcdn.com/w20/es.png" alt="flag">
+                            <svg class="ml-1 w-3 h-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </button>
                     <!-- Dropdown -->
                     <div class="lang-dropdown-menu hidden absolute right-0 mt-2 w-40 bg-white rounded-2xl shadow-xl border border-gray-100 py-2 z-50 transition-all">
                         <button onclick="cambiarIdioma('es')" class="w-full flex items-center gap-3 px-4 py-2 hover:bg-purple-50 text-gray-700 text-sm font-medium transition-colors text-left">
-                            <img src="https://flagcdn.com/w20/es.png" class="w-5 h-auto rounded-sm" alt="ES"> Español
+                            <img src="https://flagcdn.com/w20/es.png" class="w-5 h-auto rounded-sm border border-gray-100 shadow-sm" alt="ES"> Español
                         </button>
                         <button onclick="cambiarIdioma('eu')" class="w-full flex items-center gap-3 px-4 py-2 hover:bg-purple-50 text-gray-700 text-sm font-medium transition-colors text-left">
-                            <img src="<?= base_url('img/flags/euskara.jpg') ?>" class="w-5 h-auto rounded-sm" alt="EU"> Euskara
+                            <img src="<?= base_url('img/flags/euskara.jpg') ?>" class="w-5 h-auto rounded-sm border border-gray-100 shadow-sm" alt="EU"> Euskara
                         </button>
                         <button onclick="cambiarIdioma('en')" class="w-full flex items-center gap-3 px-4 py-2 hover:bg-purple-50 text-gray-700 text-sm font-medium transition-colors text-left">
-                            <img src="https://flagcdn.com/w20/gb.png" class="w-5 h-auto rounded-sm" alt="EN"> English
+                            <img src="https://flagcdn.com/w20/gb.png" class="w-5 h-auto rounded-sm border border-gray-100 shadow-sm" alt="EN"> English
                         </button>
                         <button onclick="cambiarIdioma('fr')" class="w-full flex items-center gap-3 px-4 py-2 hover:bg-purple-50 text-gray-700 text-sm font-medium transition-colors text-left">
-                            <img src="https://flagcdn.com/w20/fr.png" class="w-5 h-auto rounded-sm" alt="FR"> Français
+                            <img src="https://flagcdn.com/w20/fr.png" class="w-5 h-auto rounded-sm border border-gray-100 shadow-sm" alt="FR"> Français
                         </button>
                         <button onclick="cambiarIdioma('pt')" class="w-full flex items-center gap-3 px-4 py-2 hover:bg-purple-50 text-gray-700 text-sm font-medium transition-colors text-left">
-                            <img src="https://flagcdn.com/w20/pt.png" class="w-5 h-auto rounded-sm" alt="PT"> Português
+                            <img src="https://flagcdn.com/w20/pt.png" class="w-5 h-auto rounded-sm border border-gray-100 shadow-sm" alt="PT"> Português
                         </button>
                         <button onclick="cambiarIdioma('it')" class="w-full flex items-center gap-3 px-4 py-2 hover:bg-purple-50 text-gray-700 text-sm font-medium transition-colors text-left">
-                            <img src="https://flagcdn.com/w20/it.png" class="w-5 h-auto rounded-sm" alt="IT"> Italiano
+                            <img src="https://flagcdn.com/w20/it.png" class="w-5 h-auto rounded-sm border border-gray-100 shadow-sm" alt="IT"> Italiano
                         </button>
                         <button onclick="cambiarIdioma('zh-TW')" class="w-full flex items-center gap-3 px-4 py-2 hover:bg-purple-50 text-gray-700 text-sm font-medium transition-colors text-left">
-                            <img src="https://flagcdn.com/w20/tw.png" class="w-5 h-auto rounded-sm" alt="ZH"> Chino
+                            <img src="https://flagcdn.com/w20/tw.png" class="w-5 h-auto rounded-sm border border-gray-100 shadow-sm" alt="ZH"> Chino
                         </button>
                         <button onclick="cambiarIdioma('ja')" class="w-full flex items-center gap-3 px-4 py-2 hover:bg-purple-50 text-gray-700 text-sm font-medium transition-colors text-left">
-                            <img src="https://flagcdn.com/w20/jp.png" class="w-5 h-auto rounded-sm" alt="JA"> Japonés
+                            <img src="https://flagcdn.com/w20/jp.png" class="w-5 h-auto rounded-sm border border-gray-200 shadow-sm" alt="JA"> Japonés
                         </button>
                     </div>
                 </li>

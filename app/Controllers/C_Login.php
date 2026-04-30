@@ -100,6 +100,21 @@ class C_Login extends BaseController
             return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
         }
 
+        // --- Manejo de la Foto de Perfil (BLOB) ---
+        $img = $this->request->getFile('fotoPerfil');
+        $contenidoFoto = null;
+
+        if ($img && $img->isValid() && !$img->hasMoved()) {
+            // Leemos el archivo como binario (BLOB)
+            $contenidoFoto = file_get_contents($img->getTempName());
+        } else {
+            // Si no suben nada, podemos cargar una imagen por defecto desde el disco y guardarla también como BLOB
+            $rutaDefault = FCPATH . 'img/logo.png'; // Usamos el logo como imagen por defecto si no hay otra
+            if (file_exists($rutaDefault)) {
+                $contenidoFoto = file_get_contents($rutaDefault);
+            }
+        }
+
         // Metemos los datos limpios en un array listos para enviar a la base de datos
         $data = [
             'dni'         => $this->request->getPost('dni'),
@@ -108,6 +123,7 @@ class C_Login extends BaseController
             'gmail'       => $this->request->getPost('gmail'),
             // ¡MUY IMPORTANTE!: Encriptamos la contraseña para que ni el administrador pueda leerla
             'contrasenia' => password_hash($this->request->getPost('contrasenia'), PASSWORD_DEFAULT),
+            'foto'        => $contenidoFoto
         ];
 
         // Insertamos el nuevo usuario

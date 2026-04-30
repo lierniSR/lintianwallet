@@ -1,7 +1,7 @@
 <?php
 // PREPROCESADO: Sumamos todo el dinero de los gastos para mostrarlo en el cuadro resumen
 // Calculamos el total de los gastos
-$totalGastos = array_reduce($gastos, function ($carry, $item) {
+$totalGastos = array_reduce($gastos ?? [], function ($carry, $item) {
     $dinero = isset($item->dinero) ? $item->dinero : 0;
     return $carry + $dinero;
 }, 0);
@@ -42,7 +42,7 @@ $totalGastos = array_reduce($gastos, function ($carry, $item) {
                         <select onchange="window.location.href='<?= base_url('gastos') ?>?cuenta_id=' + this.value" class="appearance-none w-full md:min-w-[300px] pl-11 pr-10 py-3 bg-white/10 hover:bg-white/20 backdrop-blur-md rounded-2xl border border-white/20 text-white font-medium focus:outline-none focus:ring-2 focus:ring-[#ef4444]/50 transition-all cursor-pointer">
                             <?php foreach ($cuentas as $c): ?>
                                 <!-- Mostramos ID de tarjeta como indicativo básico -->
-                                <option value="<?= $c->id ?>" <?= ($c->id == $cuenta_seleccionada) ? 'selected' : '' ?> class="bg-purple-800 text-white">
+                                <option value="<?= $c->id ?>" <?= ($c->id == ($cuenta_seleccionada ?? null)) ? 'selected' : '' ?> class="bg-purple-800 text-white">
                                     <?= esc($c->categoria_nombre ?? 'Cuenta Nº' . $c->id) ?> - <?= number_format($c->saldoTotal, 2, ',', '.') ?>€
                                 </option>
                             <?php endforeach; ?>

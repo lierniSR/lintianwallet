@@ -35,7 +35,7 @@
                         <select onchange="window.location.href='<?= base_url('movimientos') ?>?cuenta_id=' + this.value" class="appearance-none w-full md:min-w-[300px] pl-11 pr-10 py-3 bg-white/10 hover:bg-white/20 backdrop-blur-md rounded-2xl border border-white/20 text-white font-medium focus:outline-none focus:ring-2 focus:ring-purple-400/50 transition-all cursor-pointer">
                             <?php foreach ($cuentas as $c): ?>
                                 <!-- Mostramos ID de tarjeta como indicativo básico -->
-                                <option value="<?= $c->id ?>" <?= ($c->id == $cuenta_seleccionada) ? 'selected' : '' ?> class="bg-purple-800 text-white">
+                                <option value="<?= $c->id ?>" <?= ($c->id == ($cuenta_seleccionada ?? null)) ? 'selected' : '' ?> class="bg-purple-800 text-white">
                                     <?= esc($c->categoria_nombre ?? 'Cuenta Nº' . $c->id) ?> - <?= number_format($c->saldoTotal, 2, ',', '.') ?>€
                                 </option>
                             <?php endforeach; ?>
@@ -58,7 +58,7 @@
                     <div class="absolute -right-10 -top-10 w-40 h-40 bg-white/10 rounded-full blur-2xl"></div>
                     <div class="relative z-10">
                         <p class="text-white/80 text-sm font-bold uppercase tracking-wider mb-2">Saldo de la Cuenta</p>
-                        <h2 class="text-4xl font-extrabold text-white mb-1"><?= number_format($saldoCuenta, 2, ',', '.') ?> €</h2>
+                        <h2 class="text-4xl font-extrabold text-white mb-1"><?= number_format($saldoCuenta ?? 0, 2, ',', '.') ?> €</h2>
                     </div>
                 </div>
             </div>

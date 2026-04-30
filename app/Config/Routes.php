@@ -59,3 +59,4 @@ $routes->get('jsoncontroller/traducciones', 'C_Json::traducciones');
 $routes->get('configuracion', 'C_Configuracion::index');
 $routes->post('configuracion/cambiarContrasenia', 'C_Configuracion::cambiarContrasenia');
 $routes->get('logout', 'C_Login::logout');
+$routes->get('usuario/foto/(:any)', 'C_Usuario::foto/$1');

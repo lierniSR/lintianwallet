@@ -1,7 +1,7 @@
 <?php
 // PREPROCESADO: Sumamos todo el dinero de los ingresos para tener la cifra del bloque izquierdo
 // Calculamos el total de los ingresos
-$totalIngresos = array_reduce($ingresos, function ($carry, $item) {
+$totalIngresos = array_reduce($ingresos ?? [], function ($carry, $item) {
     $dinero = isset($item->dinero) ? $item->dinero : 0;
     return $carry + $dinero;
 }, 0);
@@ -42,7 +42,7 @@ $totalIngresos = array_reduce($ingresos, function ($carry, $item) {
                         <select onchange="window.location.href='<?= base_url('ingresos') ?>?cuenta_id=' + this.value" class="appearance-none w-full md:min-w-[300px] pl-11 pr-10 py-3 bg-white/10 hover:bg-white/20 backdrop-blur-md rounded-2xl border border-white/20 text-white font-medium focus:outline-none focus:ring-2 focus:ring-[#29C6AD]/50 transition-all cursor-pointer">
                             <?php foreach ($cuentas as $c): ?>
                                 <!-- Mostramos ID de tarjeta como indicativo básico -->
-                                <option value="<?= $c->id ?>" <?= ($c->id == $cuenta_seleccionada) ? 'selected' : '' ?> class="bg-purple-800 text-white">
+                                <option value="<?= $c->id ?>" <?= ($c->id == ($cuenta_seleccionada ?? null)) ? 'selected' : '' ?> class="bg-purple-800 text-white">
                                     <?= esc($c->categoria_nombre ?? 'Cuenta Nº' . $c->id) ?> - <?= number_format($c->saldoTotal, 2, ',', '.') ?>€
                                 </option>
                             <?php endforeach; ?>

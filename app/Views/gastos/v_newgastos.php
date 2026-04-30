@@ -80,7 +80,9 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 11h.01M7 15h.01M13 7h.01M13 11h.01M13 15h.01M17 7h.01M17 11h.01M17 15h.01M5 21h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v14a2 2 0 002 2z" />
                             </svg>
                         </div>
-                        <select name="id_subcategoria" id="id_subcategoria" required class="w-full pl-11 pr-10 py-4 bg-white/10 border border-white/20 rounded-2xl text-white appearance-none focus:outline-none focus:ring-2 focus:ring-[#ef4444]/50 focus:border-[#ef4444] transition-all font-medium cursor-pointer">
+                        <select name="id_subcategoria" id="id_subcategoria" required
+                            onchange="toggleOtroSubcategoria(this)"
+                            class="w-full pl-11 pr-10 py-4 bg-white/10 border border-white/20 rounded-2xl text-white appearance-none focus:outline-none focus:ring-2 focus:ring-[#ef4444]/50 focus:border-[#ef4444] transition-all font-medium cursor-pointer">
                             <option value="" disabled selected class="bg-purple-800 text-white">Selecciona una subcategoría</option>
                             <?php if(!empty($subcategorias)): ?>
                                 <?php foreach ($subcategorias as $sub): ?>
@@ -89,12 +91,28 @@
                                     </option>
                                 <?php endforeach; ?>
                             <?php endif; ?>
+                            <option value="otro" class="bg-purple-800 text-white">Otro...</option>
                         </select>
                         <div class="absolute inset-y-0 right-0 pr-4 flex items-center pointer-events-none">
                             <svg class="w-5 h-5 text-white/50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
                             </svg>
                         </div>
+                    </div>
+
+                    <!-- Campo de texto que aparece solo si elige 'Otro' -->
+                    <div id="wrapper_nueva_subcategoria" class="hidden mt-3">
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                                <svg class="w-5 h-5 text-yellow-400/70" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                                </svg>
+                            </div>
+                            <input type="text" name="nueva_subcategoria" id="nueva_subcategoria"
+                                placeholder="Nombre de la nueva subcategoría..."
+                                class="w-full pl-11 pr-4 py-3 bg-yellow-400/10 border border-yellow-400/40 rounded-2xl text-white placeholder-white/30 focus:outline-none focus:ring-2 focus:ring-yellow-400/50 focus:border-yellow-400 transition-all font-medium">
+                        </div>
+                        <p class="text-yellow-300/70 text-xs mt-1.5 ml-1">Se creará automáticamente una nueva subcategoría con ese nombre.</p>
                     </div>
                 </div>
 
@@ -125,6 +143,21 @@
         </div>
     </main>
 
+<script>
+    function toggleOtroSubcategoria(select) {
+        const wrapper = document.getElementById('wrapper_nueva_subcategoria');
+        const input   = document.getElementById('nueva_subcategoria');
+        if (select.value === 'otro') {
+            wrapper.classList.remove('hidden');
+            input.required = true;
+            input.focus();
+        } else {
+            wrapper.classList.add('hidden');
+            input.required = false;
+            input.value = '';
+        }
+    }
+</script>
 </body>
 
 </html>

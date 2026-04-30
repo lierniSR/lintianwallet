@@ -16,9 +16,19 @@
     <!-- === Contenedor Principal === -->
     <main class="max-w-7xl mx-auto mt-10 px-4">
         <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-10">
-            <div>
-                <h1 class="text-4xl font-extrabold text-white tracking-tight">Bienvenido/a de nuevo <?= $usuario->nombre ?></h1>
-                <p class="text-purple-100 mt-2 font-medium">Gestiona tus finanzas con estilo y seguridad.</p>
+            <div class="flex items-center gap-4">
+                <?php if (session()->get('dni')): ?>
+                    <div class="relative group">
+                        <div class="absolute -inset-1 bg-gradient-to-r from-purple-600 to-blue-600 rounded-full blur opacity-25 group-hover:opacity-40 transition duration-300"></div>
+                        <img src="<?= base_url('usuario/foto/' . session()->get('dni')) ?>" 
+                             alt="Perfil" 
+                             class="relative h-16 w-16 rounded-full object-cover border-4 border-white shadow-xl shadow-purple-900/20">
+                    </div>
+                <?php endif; ?>
+                <div>
+                    <h1 class="text-4xl font-extrabold text-white tracking-tight">Bienvenido/a de nuevo <?= $usuario->nombre ?></h1>
+                    <p class="text-purple-100 mt-2 font-medium">Gestiona tus finanzas con estilo y seguridad.</p>
+                </div>
             </div>
 
             <button onclick="window.location.href='<?= base_url('tarjetas/new') ?>'" class="flex items-center gap-2 px-6 py-3 bg-white/10 hover:bg-white/20 backdrop-blur-md text-white font-bold rounded-2xl border border-white/20 transition-all duration-300 transform hover:-translate-y-1">

@@ -114,7 +114,7 @@
                     </div>
                 <?php endif; ?>
 
-                <?= form_open('/autenticarRegistro', ['class' => 'flex flex-col gap-5 w-full']) ?>
+                <?= form_open_multipart('/autenticarRegistro', ['class' => 'flex flex-col gap-5 w-full']) ?>
 
                 <div class="flex flex-col group">
                     <?= form_label('', 'dni', ['class' => 'text-xs font-semibold text-gray-600 mb-1 ml-1 transition-colors group-focus-within:text-[#29C6AD]', 'id' => 'dniLabel', 'data-tr' => 'dni']) ?>
