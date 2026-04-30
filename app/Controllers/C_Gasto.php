@@ -103,12 +103,12 @@ class C_Gasto extends BaseController
                     // Eliminamos el registro de evidencia de nuestro despilfarro (BBDD)
                     $this->modeloGasto->delete($id);
                     
-                    return redirect()->to('/gastos?cuenta_id=' . $cuenta->id)->with('success', 'Gasto eliminado correctamente.');
+                    return redirect()->to('/gastos?cuenta_id=' . $cuenta->id)->with('success', tr('exitoEliminarGasto') ?? 'Gasto eliminado correctamente.');
                 }
             }
         }
 
-        return redirect()->to('/gastos')->with('errors', ['No se ha podido eliminar el gasto o no tienes permisos.']);
+        return redirect()->to('/gastos')->with('errors', [tr('errorEliminarGasto') ?? 'No se ha podido eliminar el gasto o no tienes permisos.']);
     }
 
     // Mostrar el formulario dinámico
@@ -126,7 +126,7 @@ class C_Gasto extends BaseController
 
         // En caso de fallar en la investigación de propiedad abortar
         if (!$cuenta) {
-            return redirect()->to('/gastos')->with('errors', ['La cuenta seleccionada no existe o no te pertenece.']);
+            return redirect()->to('/gastos')->with('errors', [tr('errorCuentaInexistente') ?? 'La cuenta seleccionada no existe o no te pertenece.']);
         }
 
         // Metemos en caja data
@@ -148,33 +148,71 @@ class C_Gasto extends BaseController
             return redirect()->to('/login');
         }
 
+        // Si el usuario eligió "Otro...", creamos o reutilizamos la subcategoría al vuelo
+        $id_subcategoria_final = null;
+
+        if ($this->request->getPost('id_subcategoria') === 'otro') {
+            $nombreNuevo = trim($this->request->getPost('nueva_subcategoria') ?? '');
+
+            if (empty($nombreNuevo)) {
+                return redirect()->back()->withInput()->with('errors', ['id_subcategoria' => tr('errorSubcategoriaObligatoria') ?? 'Debes escribir un nombre para la nueva subcategoría.']);
+            }
+
+            // Necesitamos el id_categoria de la cuenta para enlazar correctamente la nueva subcategoría
+            $id_cuenta_tmp = $this->request->getPost('id_cuenta');
+            $cuenta_tmp    = $this->modeloCuentas->find($id_cuenta_tmp);
+
+            if (!$cuenta_tmp) {
+                return redirect()->back()->withInput()->with('errors', ['id_subcategoria' => tr('errorCategoriaCuentaIndeterminada') ?? 'No se pudo determinar la categoría de la cuenta.']);
+            }
+
+            // Si ya existe con ese nombre en esta categoría, reutilizamos su ID
+            $existente = $this->modeloSubcategoria
+                ->where('nombre', $nombreNuevo)
+                ->where('id_categoria', $cuenta_tmp->id_categoria)
+                ->first();
+
+            if ($existente) {
+                $id_subcategoria_final = $existente->id;
+            } else {
+                $this->modeloSubcategoria->insert([
+                    'nombre'       => $nombreNuevo,
+                    'id_categoria' => $cuenta_tmp->id_categoria
+                ]);
+                $id_subcategoria_final = $this->modeloSubcategoria->insertID();
+            }
+        }
+
         // Barreras lógicas (CodeIgniter Rules)
         $rules = [
             'dinero' => [
                 'rules'  => 'required|greater_than_equal_to[0.01]',
                 'errors' => [
-                    'required'              => 'La cantidad es obligatoria.',
-                    'greater_than_equal_to' => 'El gasto debe ser de al menos 0.01€.',
+                    'required'              => tr('errorCantidadObligatoria') ?? 'La cantidad es obligatoria.',
+                    'greater_than_equal_to' => tr('errorCantidadMinima') ?? 'El gasto debe ser de al menos 0.01€.',
                 ],
             ],
             'fecha' => [
                 'rules'  => 'required|valid_date',
                 'errors' => [
-                    'required'   => 'La fecha es obligatoria.',
-                    'valid_date' => 'La fecha no es válida.',
-                ],
-            ],
-            'id_subcategoria' => [
-                'rules'  => 'required|is_not_unique[subcategoria.id]',
-                'errors' => [
-                    'required'      => 'La subcategoría es obligatoria.',
-                    'is_not_unique' => 'La subcategoría seleccionada no es válida en la base de datos.',
+                    'required'   => tr('errorFechaObligatoria') ?? 'La fecha es obligatoria.',
+                    'valid_date' => tr('errorFechaInvalida') ?? 'La fecha no es válida.',
                 ],
             ],
         ];
 
+        // Solo validamos id_subcategoria si NO acabamos de crearla
+        if ($id_subcategoria_final === null) {
+            $rules['id_subcategoria'] = [
+                'rules'  => 'required|is_not_unique[subcategoria.id]',
+                'errors' => [
+                    'required'      => tr('errorSubcategoriaObligatoriaForm') ?? 'La subcategoría es obligatoria.',
+                    'is_not_unique' => tr('errorSubcategoriaInvalida') ?? 'La subcategoría seleccionada no es válida en la base de datos.',
+                ],
+            ];
+        }
+
         if (!$this->validate($rules)) {
-            // Te tiramos directo pa' atrás con todo pitando
             return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
         }
 
@@ -186,15 +224,18 @@ class C_Gasto extends BaseController
             ->first();
 
         if (!$cuenta) {
-            return redirect()->to('/gastos')->with('errors', ['La cuenta seleccionada no es válida.']);
+            return redirect()->to('/gastos')->with('errors', [tr('errorCuentaInvalida') ?? 'La cuenta seleccionada no es válida.']);
         }
+
+        // Usamos el ID definitivo: el de la nueva subcategoría, o el del select
+        $id_subcategoria = $id_subcategoria_final ?? $this->request->getPost('id_subcategoria');
 
         // Metemos nuestros campos envasados al vacío listos
         $dataInsert = [
             'dinero'          => $this->request->getPost('dinero'),
             'fecha'           => $this->request->getPost('fecha'),
             'id_cuenta'       => $id_cuenta,
-            'id_subcategoria' => $this->request->getPost('id_subcategoria')
+            'id_subcategoria' => $id_subcategoria
         ];
 
         // Impacto a tabla Gastos 
@@ -204,6 +245,6 @@ class C_Gasto extends BaseController
         $nuevoSaldo = $cuenta->saldoTotal - $dataInsert['dinero'];
         $this->modeloCuentas->update($id_cuenta, ['saldoTotal' => $nuevoSaldo]);
 
-        return redirect()->to('/gastos?cuenta_id=' . $id_cuenta)->with('success', 'Gasto registrado correctamente.');
+        return redirect()->to('/gastos?cuenta_id=' . $id_cuenta)->with('success', tr('exitoGasto') ?? 'Gasto registrado correctamente.');
     }
 }

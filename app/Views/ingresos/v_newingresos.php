@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nuevo Ingreso | Lintian Wallet</title>
+    <title data-tr="tituloNuevoIngreso"><?= tr('tituloNuevoIngreso') ?? 'Nuevo Ingreso' ?></title>
     <link rel="icon" href="<?= base_url('img/logo.ico') ?>">
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 </head>
@@ -17,8 +17,8 @@
         <div class="w-full max-w-lg bg-white/10 backdrop-blur-xl rounded-3xl border border-white/20 shadow-2xl overflow-hidden transform transition-all">
             <div class="p-8 md:p-10">
                 <div class="mb-8 text-center md:text-left">
-                    <h1 class="text-3xl font-bold text-white tracking-tight">Nuevo Ingreso</h1>
-                    <p class="text-purple-200 font-medium">Registra una entrada de dinero en la cuenta seleccionada.</p>
+                    <h1 class="text-3xl font-bold text-white tracking-tight" data-tr="tituloNuevoIngreso"><?= tr("tituloNuevoIngreso") ?? 'Nuevo Ingreso' ?></h1>
+                    <p class="text-purple-200 font-medium" data-tr="descNuevoIngreso"><?= tr("descNuevoIngreso") ?? 'Registra una entrada de dinero en la cuenta seleccionada.' ?></p>
                 </div>
 
                 <!-- Errores de validación -->
@@ -40,25 +40,25 @@
                 <!-- FORMULARIO: Insercción a la base de datos hacia C_Ingreso -->
                 <?= form_open('ingresos/crear', ['class' => 'space-y-6']) ?>
                 <!-- Hidden inputs -->
-                <input type="hidden" name="id_cuenta" value="<?= esc($id_cuenta) ?>">
+                <input type="hidden" name="id_cuenta" value="<?= esc($id_cuenta ?? '') ?>">
 
                 <!-- Dinero a ingresar -->
                 <div class="space-y-2 group">
-                    <label for="dinero" class="text-sm font-semibold text-purple-100 ml-1 group-focus-within:text-[#29C6AD] transition-colors">Cantidad a ingresar (€)</label>
+                    <label for="dinero" class="text-sm font-semibold text-purple-100 ml-1 group-focus-within:text-[#29C6AD] transition-colors"><span data-tr="labelCantidadIngresar"><?= tr("labelCantidadIngresar") ?? 'Cantidad a ingresar (€)' ?></span></label>
                     <div class="relative">
                         <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                             <span class="text-white/50 font-bold">€</span>
                         </div>
                         <input type="number" step="0.01" name="dinero" id="dinero" required
                             class="w-full pl-10 pr-4 py-4 bg-white/10 border border-white/20 rounded-2xl text-white placeholder-white/30 focus:outline-none focus:ring-2 focus:ring-[#29C6AD]/50 focus:border-[#29C6AD] transition-all text-lg font-medium"
-                            placeholder="0,00">
+                            placeholder="<?= tr('placeholderDinero') ?? '0,00' ?>" data-tr="placeholderDinero">
                     </div>
                 </div>
 
                 <!-- Selector de fecha autocompletado en el día actual por PHP -->
                 <!-- Fecha de ingreso -->
                 <div class="space-y-2 group">
-                    <label for="fecha" class="text-sm font-semibold text-purple-100 ml-1 group-focus-within:text-[#29C6AD] transition-colors">Fecha de Ingreso</label>
+                    <label for="fecha" class="text-sm font-semibold text-purple-100 ml-1 group-focus-within:text-[#29C6AD] transition-colors"><span data-tr="labelFechaIngreso"><?= tr("labelFechaIngreso") ?? 'Fecha de Ingreso' ?></span></label>
                     <div class="relative">
                         <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                             <svg class="w-5 h-5 text-white/50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -74,14 +74,14 @@
                 <!-- Zona de enviar cambios o volver hacia atrás -->
                 <!-- Botones de Acción -->
                 <div class="flex flex-col gap-4 pt-4">
-                    <button type="submit"
+                    <button type="submit" data-tr="btnAnadirIngreso"
                         class="w-full py-4 bg-[#29C6AD] hover:bg-[#23a893] text-white font-bold rounded-2xl shadow-xl shadow-[#29C6AD]/20 transition-all transform hover:-translate-y-1 active:scale-95 text-lg">
-                        Añadir Ingreso
+                        <?= tr("btnAnadirIngreso") ?? 'Añadir Ingreso' ?>
                     </button>
                     <!-- El botón volver usa javascript para ir a la cuenta concreta o base_url('ingresos') -->
-                    <a href="<?= base_url('ingresos?cuenta_id=' . esc($id_cuenta)) ?>"
+                    <a href="<?= base_url('ingresos?cuenta_id=' . esc($id_cuenta ?? '')) ?>" data-tr="btnVolver"
                         class="w-full py-4 bg-white/5 hover:bg-white/10 text-white font-bold rounded-2xl border border-white/10 transition-all text-center text-lg">
-                        Volver
+                        <?= tr("btnVolver") ?? 'Volver' ?>
                     </a>
                 </div>
                 <?= form_close() ?>
@@ -89,7 +89,7 @@
 
             <!-- Estética Inferior -->
             <div class="px-8 py-4 bg-black/20 border-t border-white/10 flex justify-between items-center">
-                <span class="text-xs font-bold text-white/30 tracking-widest uppercase">Lintian Security Protocol</span>
+                <span class="text-xs font-bold text-white/30 tracking-widest uppercase" data-tr="seguridadProtocolo"><?= tr("seguridadProtocolo") ?? 'Lintian Security Protocol' ?></span>
                 <div class="flex gap-2">
                     <div class="w-2 h-2 rounded-full bg-[#29C6AD]"></div>
                     <div class="w-2 h-2 rounded-full bg-[#29C6AD]/30"></div>

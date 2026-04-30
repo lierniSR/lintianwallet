@@ -29,19 +29,19 @@ class C_Login extends BaseController
 
         // Si no encontramos a nadie con ese DNI, lo devolvemos con un mensaje de error
         if (!$usuario) {
-            session()->setFlashdata('error', 'Usuario no encontrado');
+            session()->setFlashdata('error', tr('Usuario no encontrado') ?? 'Usuario no encontrado');
             return redirect()->back();
         }
 
         // Verificamos si la contraseña que escribió coincide con la versión encriptada guardada
         if (!password_verify($this->request->getPost('contrasenia'), $usuario->contrasenia)) {
-            session()->setFlashdata('error', 'Contraseña incorrecta');
+            session()->setFlashdata('error', tr('Contraseña incorrecta') ?? 'Contraseña incorrecta');
             return redirect()->back();
         }
 
         // Si todo está bien, guardamos su DNI en la sesión "como una pulsera VIP" para dejarle pasar
         session()->set('dni', $usuario->dni);
-        
+
         // ¡Adentro! Lo enviamos a la vista de sus tarjetas
         return redirect()->to('/tarjetas');
     }
@@ -60,37 +60,37 @@ class C_Login extends BaseController
             'dni' => [
                 'rules'  => 'required|regex_match[/^[0-9]{8}[A-Z]$/]|is_unique[usuario.dni]',
                 'errors' => [
-                    'required'    => 'El DNI es obligatorio.',
-                    'regex_match' => 'El formato del DNI no es válido (ej. 12345678A).',
-                    'is_unique'   => 'El DNI ya está registrado.',
+                    'required'    => tr('El DNI es obligatorio.') ?? 'El DNI es obligatorio.',
+                    'regex_match' => tr('El formato del DNI no es válido (ej. 12345678A).') ?? 'El formato del DNI no es válido (ej. 12345678A).',
+                    'is_unique'   => tr('El DNI ya está registrado.') ?? 'El DNI ya está registrado.',
                 ],
             ],
             'nombre' => [
                 'rules'  => 'required|min_length[2]',
                 'errors' => [
-                    'required'   => 'El nombre es obligatorio.',
-                    'min_length' => 'El nombre es demasiado corto.',
+                    'required'   => tr('El nombre es obligatorio.') ?? 'El nombre es obligatorio.',
+                    'min_length' => tr('El nombre es demasiado corto.') ?? 'El nombre es demasiado corto.',
                 ],
             ],
             'apellido' => [
                 'rules'  => 'required|min_length[2]',
                 'errors' => [
-                    'required'   => 'El apellido es obligatorio.',
-                    'min_length' => 'El apellido es demasiado corto.',
+                    'required'   => tr('El apellido es obligatorio.') ?? 'El apellido es obligatorio.',
+                    'min_length' => tr('El apellido es demasiado corto.') ?? 'El apellido es demasiado corto.',
                 ],
             ],
             'gmail' => [
                 'rules'  => 'required|valid_email',
                 'errors' => [
-                    'required'    => 'El correo es obligatorio.',
-                    'valid_email' => 'El formato del correo no es válido.',
+                    'required'    => tr('El correo es obligatorio.') ?? 'El correo es obligatorio.',
+                    'valid_email' => tr('El formato del correo no es válido.') ?? 'El formato del correo no es válido.',
                 ],
             ],
             'contrasenia' => [
                 'rules'  => 'required|min_length[4]',
                 'errors' => [
-                    'required'   => 'La contraseña es obligatoria.',
-                    'min_length' => 'La contraseña debe tener al menos 4 caracteres.',
+                    'required'   => tr('La contraseña es obligatoria.') ?? 'La contraseña es obligatoria.',
+                    'min_length' => tr('La contraseña debe tener al menos 4 caracteres.') ?? 'La contraseña debe tener al menos 4 caracteres.',
                 ],
             ],
         ];
@@ -98,6 +98,21 @@ class C_Login extends BaseController
         // Comprobamos si no cumple con las reglas y le devolvemos los errores
         if (!$this->validate($rules)) {
             return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
+        }
+
+        // --- Manejo de la Foto de Perfil (BLOB) ---
+        $img = $this->request->getFile('fotoPerfil');
+        $contenidoFoto = null;
+
+        if ($img && $img->isValid() && !$img->hasMoved()) {
+            // Leemos el archivo como binario (BLOB)
+            $contenidoFoto = file_get_contents($img->getTempName());
+        } else {
+            // Si no suben nada, podemos cargar una imagen por defecto desde el disco y guardarla también como BLOB
+            $rutaDefault = FCPATH . 'img/logo.png'; // Usamos el logo como imagen por defecto si no hay otra
+            if (file_exists($rutaDefault)) {
+                $contenidoFoto = file_get_contents($rutaDefault);
+            }
         }
 
         // Metemos los datos limpios en un array listos para enviar a la base de datos
@@ -108,12 +123,20 @@ class C_Login extends BaseController
             'gmail'       => $this->request->getPost('gmail'),
             // ¡MUY IMPORTANTE!: Encriptamos la contraseña para que ni el administrador pueda leerla
             'contrasenia' => password_hash($this->request->getPost('contrasenia'), PASSWORD_DEFAULT),
+            'foto'        => $contenidoFoto
         ];
 
         // Insertamos el nuevo usuario
         $this->modeloUsuario->insert($data);
-        
+
         // Lo mandamos al inicio de sesión para que entre con su cuenta recién hecha
+        return redirect()->to('/login');
+    }
+
+    // Cierra la sesión del usuario y lo manda de vuelta al login
+    public function logout()
+    {
+        session()->destroy();
         return redirect()->to('/login');
     }
 }
