@@ -18,21 +18,21 @@
         <!-- Cabecera -->
         <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-10">
             <div>
-                <h1 class="text-4xl font-extrabold text-white tracking-tight">Tus Movimientos</h1>
-                <p class="text-purple-100 mt-2 font-medium">Visualiza todo el flujo de tu dinero en un solo lugar.</p>
+                <h1 class="text-4xl font-extrabold text-white tracking-tight" data-tr="tituloMovimientos"><?= tr('tituloMovimientos') ?? 'Tus Movimientos' ?></h1>
+                <p class="text-purple-100 mt-2 font-medium" data-tr="subtituloMovimientos"><?= tr('subtituloMovimientos') ?? 'Visualiza todo el flujo de tu dinero en un solo lugar.' ?></p>
             </div>
 
             <!-- Selector de cuentas para filtrar movimientos -->
             <div class="flex items-center gap-4">
                 <!-- Select de Cuentas -->
-                <?php if (!empty($cuentas) && !isset($_GET['cuenta_id'])): ?>
+                <?php if (!empty($cuentas) && (!isset($_GET['cuenta_id']) || (isset($_GET['from']) && $_GET['from'] === 'menu'))): ?>
                     <div class="relative group">
                         <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                             <svg class="w-5 h-5 text-white/50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
                             </svg>
                         </div>
-                        <select onchange="window.location.href='<?= base_url('movimientos') ?>?cuenta_id=' + this.value" class="appearance-none w-full md:min-w-[300px] pl-11 pr-10 py-3 bg-white/10 hover:bg-white/20 backdrop-blur-md rounded-2xl border border-white/20 text-white font-medium focus:outline-none focus:ring-2 focus:ring-purple-400/50 transition-all cursor-pointer">
+                        <select onchange="window.location.href='<?= base_url('movimientos') ?>?cuenta_id=' + this.value + '&from=menu'" class="appearance-none w-full md:min-w-[300px] pl-11 pr-10 py-3 bg-white/10 hover:bg-white/20 backdrop-blur-md rounded-2xl border border-white/20 text-white font-medium focus:outline-none focus:ring-2 focus:ring-purple-400/50 transition-all cursor-pointer">
                             <?php foreach ($cuentas as $c): ?>
                                 <!-- Mostramos ID de tarjeta como indicativo básico -->
                                 <option value="<?= $c->id ?>" <?= ($c->id == ($cuenta_seleccionada ?? null)) ? 'selected' : '' ?> class="bg-purple-800 text-white">
@@ -57,7 +57,7 @@
                 <div class="bg-gradient-to-br from-[#8b5cf6] to-[#5b21b6] p-8 rounded-3xl shadow-2xl relative overflow-hidden">
                     <div class="absolute -right-10 -top-10 w-40 h-40 bg-white/10 rounded-full blur-2xl"></div>
                     <div class="relative z-10">
-                        <p class="text-white/80 text-sm font-bold uppercase tracking-wider mb-2">Saldo de la Cuenta</p>
+                        <p class="text-white/80 text-sm font-bold uppercase tracking-wider mb-2" data-tr="saldoCuentaMovimientos"><?= tr('saldoCuentaMovimientos') ?? 'Saldo de la Cuenta' ?></p>
                         <h2 class="text-4xl font-extrabold text-white mb-1"><?= number_format($saldoCuenta ?? 0, 2, ',', '.') ?> €</h2>
                     </div>
                 </div>
@@ -67,7 +67,7 @@
             <div class="lg:col-span-2">
                 <div class="bg-white/10 backdrop-blur-xl border border-white/20 rounded-3xl shadow-2xl overflow-hidden min-h-[500px]">
                     <div class="px-8 py-6 border-b border-white/10 flex justify-between items-center">
-                        <h3 class="text-xl font-bold text-white">Todos los Movimientos</h3>
+                        <h3 class="text-xl font-bold text-white" data-tr="todosMovimientos"><?= tr('todosMovimientos') ?? 'Todos los Movimientos' ?></h3>
                     </div>
 
                     <!-- Zona donde se imprimen los movimientos o el mensaje de 'No hay movimientos' -->
@@ -79,8 +79,8 @@
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                                     </svg>
                                 </div>
-                                <h4 class="text-white font-bold text-xl mb-1">No hay movimientos</h4>
-                                <p class="text-purple-200/60 text-sm">Aún no se ha registrado ningún ingreso o gasto.</p>
+                                <h4 class="text-white font-bold text-xl mb-1" data-tr="noHayMovimientos"><?= tr('noHayMovimientos') ?? 'No hay movimientos' ?></h4>
+                                <p class="text-purple-200/60 text-sm" data-tr="descNoHayMovimientos"><?= tr('descNoHayMovimientos') ?? 'Aún no se ha registrado ningún ingreso o gasto.' ?></p>
                             </div>
                         <?php else: ?>
                             <?php foreach ($movimientos as $mov): ?>
@@ -93,9 +93,9 @@
                                                 </svg>
                                             </div>
                                             <div>
-                                                <h4 class="text-white font-bold text-lg leading-tight">Ingreso Nº<?= esc($mov->id) ?></h4>
+                                                <h4 class="text-white font-bold text-lg leading-tight" data-tr="ingresoN"><?= tr('ingresoN') ?? 'Ingreso Nº' ?><?= esc($mov->id) ?></h4>
                                                 <p class="text-white/50 text-sm font-medium mt-0.5">
-                                                    <?= date('d M Y', strtotime($mov->fecha)) ?> • <span class="text-green-300">Ingreso</span>
+                                                    <?= date('d M Y', strtotime($mov->fecha)) ?> • <span class="text-green-300" data-tr="labelIngreso"><?= tr('labelIngreso') ?? 'Ingreso' ?></span>
                                                 </p>
                                             </div>
                                         <?php else: ?>
@@ -105,9 +105,9 @@
                                                 </svg>
                                             </div>
                                             <div>
-                                                <h4 class="text-white font-bold text-lg leading-tight"><?= esc($mov->subcategoria_nombre ?? 'Gasto Nº' . $mov->id) ?></h4>
+                                                <h4 class="text-white font-bold text-lg leading-tight"><?= esc($mov->subcategoria_nombre ?? (tr('gastoN') ?? 'Gasto Nº') . $mov->id) ?></h4>
                                                 <p class="text-white/50 text-sm font-medium mt-0.5">
-                                                    <?= date('d M Y', strtotime($mov->fecha)) ?> • <span class="text-red-300">Gasto</span>
+                                                    <?= date('d M Y', strtotime($mov->fecha)) ?> • <span class="text-red-300" data-tr="labelGasto"><?= tr('labelGasto') ?? 'Gasto' ?></span>
                                                 </p>
                                             </div>
                                         <?php endif; ?>

@@ -29,13 +29,13 @@ class C_Login extends BaseController
 
         // Si no encontramos a nadie con ese DNI, lo devolvemos con un mensaje de error
         if (!$usuario) {
-            session()->setFlashdata('error', 'Usuario no encontrado');
+            session()->setFlashdata('error', tr('Usuario no encontrado') ?? 'Usuario no encontrado');
             return redirect()->back();
         }
 
         // Verificamos si la contraseña que escribió coincide con la versión encriptada guardada
         if (!password_verify($this->request->getPost('contrasenia'), $usuario->contrasenia)) {
-            session()->setFlashdata('error', 'Contraseña incorrecta');
+            session()->setFlashdata('error', tr('Contraseña incorrecta') ?? 'Contraseña incorrecta');
             return redirect()->back();
         }
 
@@ -60,37 +60,37 @@ class C_Login extends BaseController
             'dni' => [
                 'rules'  => 'required|regex_match[/^[0-9]{8}[A-Z]$/]|is_unique[usuario.dni]',
                 'errors' => [
-                    'required'    => 'El DNI es obligatorio.',
-                    'regex_match' => 'El formato del DNI no es válido (ej. 12345678A).',
-                    'is_unique'   => 'El DNI ya está registrado.',
+                    'required'    => tr('El DNI es obligatorio.') ?? 'El DNI es obligatorio.',
+                    'regex_match' => tr('El formato del DNI no es válido (ej. 12345678A).') ?? 'El formato del DNI no es válido (ej. 12345678A).',
+                    'is_unique'   => tr('El DNI ya está registrado.') ?? 'El DNI ya está registrado.',
                 ],
             ],
             'nombre' => [
                 'rules'  => 'required|min_length[2]',
                 'errors' => [
-                    'required'   => 'El nombre es obligatorio.',
-                    'min_length' => 'El nombre es demasiado corto.',
+                    'required'   => tr('El nombre es obligatorio.') ?? 'El nombre es obligatorio.',
+                    'min_length' => tr('El nombre es demasiado corto.') ?? 'El nombre es demasiado corto.',
                 ],
             ],
             'apellido' => [
                 'rules'  => 'required|min_length[2]',
                 'errors' => [
-                    'required'   => 'El apellido es obligatorio.',
-                    'min_length' => 'El apellido es demasiado corto.',
+                    'required'   => tr('El apellido es obligatorio.') ?? 'El apellido es obligatorio.',
+                    'min_length' => tr('El apellido es demasiado corto.') ?? 'El apellido es demasiado corto.',
                 ],
             ],
             'gmail' => [
                 'rules'  => 'required|valid_email',
                 'errors' => [
-                    'required'    => 'El correo es obligatorio.',
-                    'valid_email' => 'El formato del correo no es válido.',
+                    'required'    => tr('El correo es obligatorio.') ?? 'El correo es obligatorio.',
+                    'valid_email' => tr('El formato del correo no es válido.') ?? 'El formato del correo no es válido.',
                 ],
             ],
             'contrasenia' => [
                 'rules'  => 'required|min_length[4]',
                 'errors' => [
-                    'required'   => 'La contraseña es obligatoria.',
-                    'min_length' => 'La contraseña debe tener al menos 4 caracteres.',
+                    'required'   => tr('La contraseña es obligatoria.') ?? 'La contraseña es obligatoria.',
+                    'min_length' => tr('La contraseña debe tener al menos 4 caracteres.') ?? 'La contraseña debe tener al menos 4 caracteres.',
                 ],
             ],
         ];

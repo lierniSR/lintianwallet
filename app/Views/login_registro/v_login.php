@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Iniciar sesión</title>
+    <title data-tr="tituloLogin"><?= tr('tituloLogin') ?? 'Iniciar sesión' ?></title>
     <link rel="icon" href="img/logo.ico">
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 
@@ -114,17 +114,18 @@
 
         <!-- === Div izquierdo: Información de la Aplicación y Logo === -->
         <div class="flex flex-col items-center justify-center w-full h-full order-1 md:order-none mt-6 md:mt-0">
-            <h1 id="tituloApp" data-tr="tituloApp" class="text-3xl lg:text-4xl font-bold text-center text-gray-800 mb-4 transition-all duration-300"></h1>
+            <h1 id="tituloApp" data-tr="tituloApp" class="text-3xl lg:text-4xl font-bold text-center text-gray-800 mb-4 transition-all duration-300"><?= tr('tituloApp') ?? 'LintianWallet' ?></h1>
 
             <div class="relative group">
                 <div class="absolute -inset-1 bg-gradient-to-r from-purple-600 to-blue-600 rounded-full blur opacity-25 group-hover:opacity-50 transition duration-1000 group-hover:duration-200"></div>
                 <img src="img/logo.png" alt="Logo" class="relative w-48 h-48 md:w-56 md:h-56 lg:w-64 lg:h-64 object-contain mb-4 transform group-hover:scale-105 transition duration-300">
             </div>
 
-            <p id="eslogan" data-tr="eslogan" class="text-center text-gray-600 font-medium px-4"></p>
+            <p id="eslogan" data-tr="eslogan" class="text-center text-gray-600 font-medium px-4"><?= tr('eslogan') ?? 'Menos likes a las compras, más a tu bolsillo, !<b>LintianWallet</b> guarda tu dinero como si fuera suyo!' ?></p>
 
             <?= form_open('/registro', ['class' => 'w-full flex justify-center mt-6']) ?>
             <button id="botonRegistro" data-tr="textoBotonRegistro" class="px-8 py-2.5 rounded-full bg-[#29C6AD] text-white font-bold tracking-wide hover:bg-[#23a893] hover:shadow-lg transform hover:-translate-y-0.5 transition-all duration-300">
+                <?= tr('textoBotonRegistro') ?? 'REGISTRARSE' ?>
             </button>
             <?= form_close() ?>
         </div>
@@ -135,7 +136,7 @@
 
         <!-- Div derecho: Login Form -->
         <div class="flex flex-col items-center justify-center w-full h-full order-3 md:order-none">
-            <h1 class="text-3xl lg:text-4xl font-bold text-center text-gray-800 mb-8 mt-10" id="titulo" data-tr="tituloLogin"></h1>
+            <h1 class="text-3xl lg:text-4xl font-bold text-center text-gray-800 mb-8 mt-10" id="titulo" data-tr="tituloLogin"><?= tr('tituloLogin') ?? 'INICIAR SESION' ?></h1>
 
             <div class="w-full flex flex-col items-center justify-center">
                 <!-- Errores de validación -->
@@ -155,7 +156,7 @@
                 <?= form_open('/autenticar', ['class' => 'flex flex-col gap-6 w-full']) ?>
 
                 <div class="flex flex-col group">
-                    <?= form_label('', 'dni', ['class' => 'text-sm font-semibold text-gray-600 mb-1.5 ml-1 transition-colors group-focus-within:text-[#29C6AD]', 'id' => 'dniLabel', 'data-tr' => 'dni']) ?>
+                    <?= form_label(tr('dni') ?? 'DNI', 'dni', ['class' => 'text-sm font-semibold text-gray-600 mb-1.5 ml-1 transition-colors group-focus-within:text-[#29C6AD]', 'id' => 'dniLabel', 'data-tr' => 'dni']) ?>
 
                     <?= form_input([
                         'type'        => 'text',
@@ -163,27 +164,29 @@
                         'id'          => 'dni',
                         'value'       => old('dni'),
                         'required'    => true,
-                        'placeholder' => 'Ej. 12345678A',
+                        'placeholder' => tr('placeholderDniLogin') ?? 'Ej. 12345678A',
+                        'data-tr'     => 'placeholderDniLogin',
                         'class'       => 'w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#29C6AD]/50 focus:border-[#29C6AD] transition-all duration-200 bg-gray-50 focus:bg-white'
                     ]) ?>
                 </div>
 
                 <div class="flex flex-col group">
                     <div class="flex justify-between items-center mb-1.5 ml-1">
-                        <?= form_label('', 'contrasenia', ['class' => 'text-sm font-semibold text-gray-600 transition-colors group-focus-within:text-[#29C6AD]', 'id' => 'passwordLabel', 'data-tr' => 'contrasenia']) ?>
+                        <?= form_label(tr('contrasenia') ?? 'Contraseña', 'contrasenia', ['class' => 'text-sm font-semibold text-gray-600 transition-colors group-focus-within:text-[#29C6AD]', 'id' => 'passwordLabel', 'data-tr' => 'contrasenia']) ?>
                     </div>
 
                     <?= form_password([
                         'name'        => 'contrasenia',
                         'id'          => 'contrasenia',
                         'required'    => true,
-                        'placeholder' => 'Ej. ****',
+                        'placeholder' => tr('placeholderContraseniaLogin') ?? 'Ej. ****',
+                        'data-tr'     => 'placeholderContraseniaLogin',
                         'class'       => 'w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#29C6AD]/50 focus:border-[#29C6AD] transition-all duration-200 bg-gray-50 focus:bg-white'
                     ]) ?>
                 </div>
 
                 <div class="flex flex-col items-center justify-center mt-2">
-                    <?= form_submit('botonInicio', '', [
+                    <?= form_submit('botonInicio', tr('tituloLogin') ?? 'INICIAR SESION', [
                         'id'      => 'botonInicio',
                         'data-tr' => 'tituloLogin',
                         'class'   => 'w-full px-8 py-3.5 rounded-full bg-gradient-to-r from-[#29C6AD] to-[#23a893] text-white font-bold text-lg hover:shadow-lg hover:to-[#1f9683] transform hover:-translate-y-0.5 transition-all duration-300 cursor-pointer'

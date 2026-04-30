@@ -102,13 +102,13 @@ class C_Ingreso extends BaseController
                     // Por fin aplastamos digitalmente el historial de ese ingreso
                     $this->modeloIngreso->delete($id);
                     
-                    return redirect()->to('/ingresos?cuenta_id=' . $cuenta->id)->with('success', 'Ingreso eliminado correctamente.');
+                    return redirect()->to('/ingresos?cuenta_id=' . $cuenta->id)->with('success', tr('exitoEliminarIngreso') ?? 'Ingreso eliminado correctamente.');
                 }
             }
         }
 
         // Cae en esto si es modificado el dom con id falso
-        return redirect()->to('/ingresos')->with('errors', ['No se ha podido eliminar el ingreso o no tienes permisos.']);
+        return redirect()->to('/ingresos')->with('errors', [tr('errorEliminarIngreso') ?? 'No se ha podido eliminar el ingreso o no tienes permisos.']);
     }
 
     // Su función es la sencilla proeza de llamar al view (al formulario para meter dineritos frescos)
@@ -141,15 +141,15 @@ class C_Ingreso extends BaseController
             'dinero' => [
                 'rules'  => 'required|greater_than_equal_to[0.01]',
                 'errors' => [
-                    'required'              => 'La cantidad es obligatoria.',
-                    'greater_than_equal_to' => 'El ingreso debe ser de al menos 0.01€ y no puede ser 0.',
+                    'required'              => tr('errorCantidadObligatoria') ?? 'La cantidad es obligatoria.',
+                    'greater_than_equal_to' => tr('errorCantidadMinima') ?? 'El ingreso debe ser de al menos 0.01€ y no puede ser 0.',
                 ],
             ],
             'fecha' => [
                 'rules'  => 'required|valid_date',
                 'errors' => [
-                    'required'   => 'La fecha es obligatoria.',
-                    'valid_date' => 'La fecha no es válida.',
+                    'required'   => tr('errorFechaObligatoria') ?? 'La fecha es obligatoria.',
+                    'valid_date' => tr('errorFechaInvalida') ?? 'La fecha no es válida.',
                 ],
             ]
         ];
@@ -167,7 +167,7 @@ class C_Ingreso extends BaseController
 
         // Expulsión si descubrimos una mentira
         if (!$cuenta) {
-            return redirect()->to('/ingresos')->with('errors', ['La cuenta seleccionada no es válida o no te pertenece.']);
+            return redirect()->to('/ingresos')->with('errors', [tr('errorCuentaInvalida') ?? 'La cuenta seleccionada no es válida o no te pertenece.']);
         }
 
         // Preparamos nuestro arsenal con todo ya pulido
@@ -184,6 +184,6 @@ class C_Ingreso extends BaseController
         $nuevoSaldo = $cuenta->saldoTotal + $dataInsert['dinero'];
         $this->modeloCuentas->update($id_cuenta, ['saldoTotal' => $nuevoSaldo]);
 
-        return redirect()->to('/ingresos?cuenta_id=' . $id_cuenta)->with('success', 'Ingreso registrado correctamente.');
+        return redirect()->to('/ingresos?cuenta_id=' . $id_cuenta)->with('success', tr('exitoIngreso') ?? 'Ingreso registrado correctamente.');
     }
 }

@@ -79,7 +79,7 @@ class C_Tarjeta extends BaseController
             $nombreNuevo = trim($this->request->getPost('nueva_categoria') ?? '');
 
             if (empty($nombreNuevo)) {
-                return redirect()->back()->withInput()->with('errors', ['id_categoria' => 'Debes escribir un nombre para la nueva categoría.']);
+                return redirect()->back()->withInput()->with('errors', ['id_categoria' => tr('errorSubcategoriaObligatoria') ?? 'Debes escribir un nombre para la nueva categoría.']);
             }
 
             // Si ya existe una categoría con ese nombre, reutilizamos su ID
@@ -98,8 +98,8 @@ class C_Tarjeta extends BaseController
             'saldoTotal' => [
                 'rules'  => 'required|greater_than_equal_to[0.01]',
                 'errors' => [
-                    'required'              => 'El saldo inicial es obligatorio.',
-                    'greater_than_equal_to' => 'El saldo inicial debe ser de al menos 0.01€.',
+                    'required'              => tr('errorSaldoInicialObligatorio') ?? 'El saldo inicial es obligatorio.',
+                    'greater_than_equal_to' => tr('errorSaldoInicialMinimo') ?? 'El saldo inicial debe ser de al menos 0.01€.',
                 ],
             ],
         ];
@@ -109,8 +109,8 @@ class C_Tarjeta extends BaseController
             $rules['id_categoria'] = [
                 'rules'  => 'required|is_not_unique[categoria.id]',
                 'errors' => [
-                    'required'      => 'Debes seleccionar una categoría.',
-                    'is_not_unique' => 'La categoría seleccionada no es válida.',
+                    'required'      => tr('errorSeleccionarCategoria') ?? 'Debes seleccionar una categoría.',
+                    'is_not_unique' => tr('errorCategoriaInvalida') ?? 'La categoría seleccionada no es válida.',
                 ],
             ];
         }
@@ -128,7 +128,7 @@ class C_Tarjeta extends BaseController
             ->first();
             
         if ($existe) {
-            return redirect()->back()->withInput()->with('errors', ['id_categoria' => 'Ya tienes una cuenta vinculada a esta categoría.']);
+            return redirect()->back()->withInput()->with('errors', ['id_categoria' => tr('errorCuentaCategoriaExistente') ?? 'Ya tienes una cuenta vinculada a esta categoría.']);
         }
 
         // Encapsulamos los post puros en un array de datos
@@ -150,7 +150,7 @@ class C_Tarjeta extends BaseController
         ]);
 
         // Lo redirigimos amigablemente al inicio con felicitaciones
-        return redirect()->to('/tarjetas')->with('success', 'Cuenta creada correctamente.');
+        return redirect()->to('/tarjetas')->with('success', tr('exitoCuentaCreada') ?? 'Cuenta creada correctamente.');
     }
 
     // Pantalla superior / Procesamiento para editar opciones clave de una cuenta ya existente (como arreglar saldo inicial)
@@ -166,7 +166,7 @@ class C_Tarjeta extends BaseController
         
         // Bloqueo total si la cuenta no la encontramos o es de otra tía / tío
         if (!$cuenta || $cuenta->id_usuario != $dni) {
-            return redirect()->to('/tarjetas')->with('errors', ['No tienes permiso para modificar esta cuenta.']);
+            return redirect()->to('/tarjetas')->with('errors', [tr('errorPermisoModificarCuenta') ?? 'No tienes permiso para modificar esta cuenta.']);
         }
 
         // ¿Nos está mandando ya las cosas salvadas clickeando en Guardar? (eso es un post)
@@ -177,15 +177,15 @@ class C_Tarjeta extends BaseController
                 'saldoTotal' => [
                     'rules'  => 'required|greater_than_equal_to[0.01]',
                     'errors' => [
-                        'required'              => 'El saldo es obligatorio.',
-                        'greater_than_equal_to' => 'El saldo debe ser de al menos 0.01€.',
+                        'required'              => tr('errorSaldoObligatorio') ?? 'El saldo es obligatorio.',
+                        'greater_than_equal_to' => tr('errorSaldoMinimo') ?? 'El saldo debe ser de al menos 0.01€.',
                     ],
                 ],
                 'id_categoria' => [
                     'rules'  => 'required|is_not_unique[categoria.id]',
                     'errors' => [
-                        'required'      => 'Debes seleccionar una categoría.',
-                        'is_not_unique' => 'La categoría seleccionada no es válida.',
+                        'required'      => tr('errorSeleccionarCategoria') ?? 'Debes seleccionar una categoría.',
+                        'is_not_unique' => tr('errorCategoriaInvalida') ?? 'La categoría seleccionada no es válida.',
                     ],
                 ],
             ];
@@ -204,7 +204,7 @@ class C_Tarjeta extends BaseController
                 ->first();
                 
             if ($existe) {
-                return redirect()->back()->withInput()->with('errors', ['id_categoria' => 'Ya tienes OTRA cuenta diferente vinculada a esta categoría.']);
+                return redirect()->back()->withInput()->with('errors', ['id_categoria' => tr('errorOtraCuentaCategoriaExistente') ?? 'Ya tienes OTRA cuenta diferente vinculada a esta categoría.']);
             }
 
             // Datos fresquitos a actualizar
@@ -217,7 +217,7 @@ class C_Tarjeta extends BaseController
             $this->modeloCuentas->update($id, $dataUpdate);
 
             // Regresamos a la vista pero enseñando éxito
-            return redirect()->to('tarjetas/modificar/' . $id)->with('success', 'Cuenta modificada correctamente.');
+            return redirect()->to('tarjetas/modificar/' . $id)->with('success', tr('exitoCuentaModificada') ?? 'Cuenta modificada correctamente.');
         }
 
         // ====== Si entramos aquí, significa que entra a pelo por GET simplemente paseando para ver ========= //

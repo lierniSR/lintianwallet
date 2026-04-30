@@ -90,6 +90,15 @@ async function initTraductor() {
                     setElementText(el, t[key]);
                 }
             });
+
+            // Traducción de Títulos (tooltips)
+            const titleElements = document.querySelectorAll('[data-tr-title]');
+            titleElements.forEach(el => {
+                const key = el.getAttribute('data-tr-title');
+                if (t && t[key]) {
+                    el.title = t[key];
+                }
+            });
         } else {
             if (!("Translator" in window)) return;
             try {
@@ -104,6 +113,17 @@ async function initTraductor() {
                     if (originalText) {
                         const translated = await translator.translate(originalText);
                         setElementText(el, translated);
+                    }
+                }
+
+                // Traducción de Títulos con IA
+                const titleElements = document.querySelectorAll('[data-tr-title]');
+                for (const el of titleElements) {
+                    const key = el.getAttribute('data-tr-title');
+                    const originalText = tES[key];
+                    if (originalText) {
+                        const translated = await translator.translate(originalText);
+                        el.title = translated;
                     }
                 }
                 translator.destroy();

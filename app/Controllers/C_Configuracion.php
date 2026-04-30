@@ -36,14 +36,14 @@ class C_Configuracion extends BaseController
             'old_password' => [
                 'rules'  => 'required',
                 'errors' => [
-                    'required' => 'La contraseña actual es obligatoria.',
+                    'required' => tr('errorContraseniaActualObligatoria') ?? 'La contraseña actual es obligatoria.',
                 ],
             ],
             'new_password' => [
                 'rules'  => 'required|min_length[4]',
                 'errors' => [
-                    'required'   => 'La nueva contraseña es obligatoria.',
-                    'min_length' => 'La nueva contraseña debe tener al menos 4 caracteres.',
+                    'required'   => tr('errorNuevaContraseniaObligatoria') ?? 'La nueva contraseña es obligatoria.',
+                    'min_length' => tr('errorNuevaContraseniaCorta') ?? 'La nueva contraseña debe tener al menos 4 caracteres.',
                 ],
             ],
         ];
@@ -58,7 +58,7 @@ class C_Configuracion extends BaseController
 
         // Verificamos si la contraseña actual es correcta
         if (!password_verify($old_password, $usuario->contrasenia)) {
-            return redirect()->back()->with('error', 'La contraseña actual no es correcta.');
+            return redirect()->back()->with('error', tr('errorContraseniaActualIncorrecta') ?? 'La contraseña actual no es correcta.');
         }
 
         // Actualizamos con la nueva contraseña hasheada
@@ -66,6 +66,6 @@ class C_Configuracion extends BaseController
             'contrasenia' => password_hash($new_password, PASSWORD_DEFAULT)
         ]);
 
-        return redirect()->to('/configuracion')->with('success', 'Contraseña actualizada correctamente.');
+        return redirect()->to('/configuracion')->with('success', tr('exitoContraseniaActualizada') ?? 'Contraseña actualizada correctamente.');
     }
 }
