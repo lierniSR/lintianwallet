@@ -57,8 +57,8 @@
         })();
     </script>
 
-    <!-- Div padre -->
-    <!-- Mobile: Flex column. Desktop: Grid 3 columns -->
+    <!-- Contenedor padre principal que envuelve todo el bloque central -->
+    <!-- CSS: En móviles se pone en columna (flex-col). En ordenadores se divide en 3 columnas espaciadas (grid-cols) -->
     <div class="flex flex-col md:grid md:grid-cols-[1fr_auto_1fr] items-center justify-center w-full max-w-sm md:max-w-5xl h-auto p-6 md:p-10 bg-white rounded-xl shadow-2xl gap-8 md:gap-8 lg:gap-12 relative overflow-hidden">
 
         <!-- Language Selector: Now inside the card, positioned absolutely top-right -->
@@ -77,7 +77,7 @@
 
         <!-- Decoration/Background blobs could be added here if needed, but keeping it clean per request -->
 
-        <!-- Div izquierdo: App Info -->
+        <!-- === Div izquierdo: Información de la Aplicación y Logo === -->
         <div class="flex flex-col items-center justify-center w-full h-full order-1 md:order-none mt-6 md:mt-0">
             <h1 id="tituloApp" class="text-3xl lg:text-4xl font-bold text-center text-gray-800 mb-4 transition-all duration-300"></h1>
 
@@ -94,8 +94,8 @@
             <?= form_close() ?>
         </div>
 
-        <!-- Div medio: Separator -->
-        <!-- Mobile: Horizontal line. Desktop: Vertical line -->
+        <!-- === Div medio: Raya separadora estética === -->
+        <!-- En móvil (sm) la línea es en horizontal, en escritorio (md) se transpone a formato vertical -->
         <div class="w-full h-px md:w-px md:h-64 bg-gray-200 md:bg-gradient-to-b md:from-transparent md:via-gray-300 md:to-transparent order-2 md:order-none my-2 md:my-0"></div>
 
         <!-- Div derecho: Login Form -->
@@ -115,7 +115,8 @@
                     </div>
                 <?php endif; ?>
 
-                <!--Formulario para inciar sesión -->
+                <!-- FORMULARIO PARA INICIAR SESIÓN -->
+                <!-- Apunta a la función de validación de contraseña en nuestro Controlador -->
                 <?= form_open('/autenticar', ['class' => 'flex flex-col gap-6 w-full']) ?>
 
                 <div class="flex flex-col group">
@@ -158,7 +159,11 @@
         </div>
     </div>
     <script>
-        //Para que la traduccion funcione
+        // =========================================================
+        // SCRIPT PARA MANEJAR LAS TRADUCCIONES DEL TEXTO
+        // =========================================================
+        
+        // Variables vacías preparadas para guardar el texto original en español y euskera
         let tituloES = "";
         let tituloEU = "";
         let esloganES = "";

@@ -17,12 +17,14 @@ $m_inactive = "text-gray-600 font-medium hover:bg-purple-50 hover:text-purple-60
 <header class="sticky top-0 z-50 w-full bg-white border-b border-gray-200 shadow-sm">
     <nav class="w-full px-4 sm:px-6 lg:px-12">
         <div class="flex justify-between h-16 items-center">
+            <!-- === Sección del Logo y Marca === -->
             <!-- Logo Section -->
             <div class="flex-shrink-0 flex items-center gap-2">
                 <img src="<?= base_url('img/logo.png') ?>" alt="Logo" class="h-8 w-8 object-contain">
                 <span class="text-xl font-bold bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">Lintian Wallet</span>
             </div>
 
+            <!-- === Menú Principal de Ordenador === -->
             <!-- Navigation Links (Desktop) -->
             <ul class="hidden md:flex space-x-2 items-center">
                 <li>
@@ -68,6 +70,7 @@ $m_inactive = "text-gray-600 font-medium hover:bg-purple-50 hover:text-purple-60
                 </li>
             </ul>
 
+            <!-- === Botón de Hamburguesa para Móviles === -->
             <!-- Mobile Menu Button -->
             <div class="md:hidden flex items-center">
                 <button id="mobile-menu-button" class="p-2 rounded-md text-gray-600 hover:text-purple-600 focus:outline-none transition-colors">
@@ -79,6 +82,7 @@ $m_inactive = "text-gray-600 font-medium hover:bg-purple-50 hover:text-purple-60
             </div>
         </div>
 
+        <!-- === Menú Desplegable Móvil === -->
         <!-- Mobile Menu (Hidden by default) -->
         <div id="mobile-menu" class="hidden md:hidden pb-6 transition-all duration-300 ease-in-out">
             <ul class="flex flex-col space-y-1">

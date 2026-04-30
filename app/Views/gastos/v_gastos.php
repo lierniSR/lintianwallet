@@ -1,4 +1,5 @@
 <?php
+// PREPROCESADO: Sumamos todo el dinero de los gastos para mostrarlo en el cuadro resumen
 // Calculamos el total de los gastos
 $totalGastos = array_reduce($gastos, function ($carry, $item) {
     $dinero = isset($item->dinero) ? $item->dinero : 0;
@@ -21,6 +22,7 @@ $totalGastos = array_reduce($gastos, function ($carry, $item) {
     <?= view('plantillas/p_menu.php') ?>
 
     <main class="max-w-7xl mx-auto mt-10 px-4">
+        <!-- === Título y Selector de Cuenta === -->
         <!-- Cabecera -->
         <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-10">
             <div>
@@ -65,6 +67,7 @@ $totalGastos = array_reduce($gastos, function ($carry, $item) {
             </div>
         </div>
 
+        <!-- Distribución de pantalla: izquierda para el total de gastos, derecha para la lista -->
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
             <!-- Columna lateral: Gráfica / Info rápida de gastos -->
             <div class="lg:col-span-1 space-y-8">
@@ -108,6 +111,7 @@ $totalGastos = array_reduce($gastos, function ($carry, $item) {
                                 <p class="text-purple-200/60 text-sm">Registra tu primer gasto para verlo reflejado aquí.</p>
                             </div>
                         <?php else: ?>
+                            <!-- Bucle que escupe el HTML de cada gasto individualmente -->
                             <?php foreach ($gastos as $gasto): ?>
                                 <div class="flex items-center justify-between p-4 rounded-2xl bg-white/5 hover:bg-white/10 border border-transparent hover:border-white/10 transition-all duration-300 transform hover:-translate-y-1 cursor-pointer group">
                                     <div class="flex items-center gap-5">

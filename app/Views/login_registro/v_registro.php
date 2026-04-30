@@ -11,8 +11,8 @@
 
 <body class="relative min-h-screen bg-gradient-to-b from-purple-600 via-purple-700 to-blue-900 px-4 py-8 md:p-10 flex flex-col items-center justify-center">
 
-    <!-- Div padre -->
-    <!-- Mobile: Flex column. Desktop: Grid 3 columns -->
+    <!-- === Contenedor padre principal === -->
+    <!-- En versión móvil todo se estira hacia abajo. En versión monitor se pone en tres bloques en horizontal -->
     <div class="flex flex-col md:grid md:grid-cols-[1fr_auto_1fr] items-center justify-center w-full max-w-sm md:max-w-5xl h-auto p-6 md:p-10 bg-white rounded-xl shadow-2xl gap-8 md:gap-8 lg:gap-12 relative overflow-hidden">
 
         <!-- Language Selector: Inside the card, positioned absolutely top-right -->
@@ -29,7 +29,7 @@
             </select>
         </div>
 
-        <!-- Div izquierdo: App Info -->
+        <!-- === Div Izquierdo: Portada de la App y botón de Atajo === -->
         <div class="flex flex-col items-center justify-center w-full h-full order-1 md:order-none mt-6 md:mt-0">
             <h1 id="tituloApp" class="text-3xl lg:text-4xl font-bold text-center text-gray-800 mb-4 transition-all duration-300"></h1>
 
@@ -40,16 +40,17 @@
 
             <p id="eslogan" class="text-center text-gray-600 font-medium px-4"></p>
 
+            <!-- Botón engañoso: Simplemente te devuelve al login enviando formulario vacío a su ruta directa -->
             <?= form_open('/login', ['class' => 'w-full flex justify-center mt-6']) ?>
             <button id="botonInicio" class="px-8 py-2.5 rounded-full bg-[#29C6AD] text-white font-bold tracking-wide hover:bg-[#23a893] hover:shadow-lg transform hover:-translate-y-0.5 transition-all duration-300">
             </button>
             <?= form_close() ?>
         </div>
 
-        <!-- Div medio: Separator -->
+        <!-- === Div Medio: Línea separadora === -->
         <div class="w-full h-px md:w-px md:h-64 bg-gray-200 md:bg-gradient-to-b md:from-transparent md:via-gray-300 md:to-transparent order-2 md:order-none my-2 md:my-0"></div>
 
-        <!-- Div derecho: Registro Form -->
+        <!-- === Div Derecho: FORMULARIO OFICIAL DE REGISTRO === -->
         <div class="flex flex-col items-center justify-center w-full h-full order-3 md:order-none">
             <h1 class="text-3xl lg:text-4xl font-bold text-center text-gray-800 mb-8" id="titulo"></h1>
 
@@ -82,7 +83,7 @@
                     </div>
                 <?php endif; ?>
 
-                <!--Formulario para registrarse -->
+                <!-- Al clicar manda TODO el tochazo de información directa al controlador de Registro -->
                 <?= form_open('/autenticarRegistro', ['class' => 'flex flex-col gap-5 w-full']) ?>
 
                 <div class="flex flex-col group">
@@ -171,7 +172,11 @@
         </div>
     </div>
     <script>
-        //Para que la traduccion funcione
+        // =========================================================
+        // MOTOR BÁSICO PARA CARGAR TEXTOS SEGÚN SELECTOR DE IDIOMA
+        // =========================================================
+        
+        // Variables para guardar las memorias locales
         let tituloES = "";
         let tituloEU = "";
         let esloganES = "";

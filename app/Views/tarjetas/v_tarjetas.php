@@ -13,6 +13,7 @@
 
     <?= view('plantillas/p_menu.php') ?>
 
+    <!-- === Contenedor Principal === -->
     <main class="max-w-7xl mx-auto mt-10 px-4">
         <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-10">
             <div>
@@ -28,6 +29,7 @@
             </button>
         </div>
 
+        <!-- Comprobamos si el usuario tiene cuentas/tarjetas -->
         <?php if (count($cuentas) > 0) : ?>
             <?php
             // Definición de gradientes premium para las tarjetas
@@ -42,6 +44,7 @@
                 'from-sky-400 to-blue-500'
             ];
             ?>
+            <!-- Cuadrícula de Tarjetas: 1 columna en móviles, 2 en tablets, 3 en monitores -->
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 <?php foreach ($cuentas as $cuenta) : ?>
                     <?php
@@ -126,6 +129,7 @@
             </div>
         <?php endif ?>
 
+        <!-- Menú alternativo cuando NO hay cuentas creadas -->
         <?php if (count($cuentas) == 0) : ?>
             <div class="flex flex-col items-center justify-center py-20 bg-white/5 backdrop-blur-md rounded-3xl border border-white/10 shadow-xl">
                 <div class="p-6 bg-white/10 rounded-full mb-6">
@@ -142,6 +146,7 @@
         <?php endif ?>
     </main>
 
+    <!-- Lógica en JavaScript para ocultar/mostrar número de la tarjeta y animaciones en móviles -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             // Toggle Card Number

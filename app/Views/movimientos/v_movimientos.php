@@ -13,6 +13,7 @@
 
     <?= view('plantillas/p_menu.php') ?>
 
+    <!-- === Contenedor Principal === -->
     <main class="max-w-7xl mx-auto mt-10 px-4">
         <!-- Cabecera -->
         <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-10">
@@ -21,6 +22,7 @@
                 <p class="text-purple-100 mt-2 font-medium">Visualiza todo el flujo de tu dinero en un solo lugar.</p>
             </div>
 
+            <!-- Selector de cuentas para filtrar movimientos -->
             <div class="flex items-center gap-4">
                 <!-- Select de Cuentas -->
                 <?php if (!empty($cuentas) && !isset($_GET['cuenta_id'])): ?>
@@ -48,6 +50,7 @@
             </div>
         </div>
 
+        <!-- Diseño a dos bloques: Lateral izquierdo para resumen, derecho para la lista de movimientos -->
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
             <!-- Columna lateral: Gráfica / Info rápida de la cuenta -->
             <div class="lg:col-span-1 space-y-8">
@@ -67,6 +70,7 @@
                         <h3 class="text-xl font-bold text-white">Todos los Movimientos</h3>
                     </div>
 
+                    <!-- Zona donde se imprimen los movimientos o el mensaje de 'No hay movimientos' -->
                     <div class="p-4 space-y-2">
                         <?php if (empty($movimientos)): ?>
                             <div class="flex flex-col items-center justify-center py-16 text-center">

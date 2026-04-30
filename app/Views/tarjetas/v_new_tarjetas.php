@@ -12,6 +12,7 @@
 <body class="relative min-h-screen bg-gradient-to-b from-purple-600 via-purple-700 to-blue-900 pb-12 font-sans selection:bg-[#29C6AD]/30 flex flex-col">
     <?= view('plantillas/p_menu.php') ?>
 
+    <!-- === Contenedor Principal Ajustado al Centro === -->
     <main class="flex-grow flex items-center justify-center px-4 py-16 md:py-24">
         <div class="w-full max-w-lg bg-white/10 backdrop-blur-xl rounded-3xl border border-white/20 shadow-2xl overflow-hidden transform transition-all">
             <div class="p-8 md:p-10">
@@ -36,6 +37,7 @@
                     </div>
                 <?php endif; ?>
 
+                <!-- FORMULARIO: Aquí enviamos la creación de la tarjeta al Controlador -->
                 <?= form_open('tarjetas/crear', ['class' => 'space-y-6']) ?>
                 <!-- Saldo Inicial -->
                 <div class="space-y-2 group">
@@ -50,6 +52,7 @@
                     </div>
                 </div>
 
+                <!-- Selector de Tipo/Categoría de la tarjeta -->
                 <!-- Categoría -->
                 <div class="space-y-2 group">
                     <label for="id_categoria" class="text-sm font-semibold text-purple-100 ml-1 group-focus-within:text-[#29C6AD] transition-colors">Categoría de la Cuenta</label>
@@ -76,6 +79,7 @@
                     </div>
                 </div>
                 <input type="hidden" name="id_usuario" id="id_usuario" value="<?= $usuario->dni ?>">
+                <!-- Zona inferor de confirmación o cancelar -->
                 <!-- Botones de Acción -->
                 <div class="flex flex-col gap-4 pt-4">
                     <button type="submit"
