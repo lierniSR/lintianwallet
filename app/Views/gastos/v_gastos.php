@@ -12,7 +12,7 @@ $totalGastos = array_reduce($gastos ?? [], function ($carry, $item) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gastos | Lintian Wallet</title>
+    <title data-tr="menuGastos"><?= tr('menuGastos') ?? 'Gastos' ?> | Lintian Wallet</title>
     <link rel="icon" href="<?= base_url('img/logo.ico') ?>">
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 </head>
@@ -20,6 +20,8 @@ $totalGastos = array_reduce($gastos ?? [], function ($carry, $item) {
 <body class="relative min-h-screen bg-gradient-to-b from-purple-600 via-purple-700 to-blue-900 pb-12 font-sans selection:bg-[#ef4444]/30">
 
     <?= view('plantillas/p_menu.php') ?>
+
+    <!-- === Vista de Gastos: Resumen y listado de egresos de dinero === -->
 
     <main class="max-w-7xl mx-auto mt-10 px-4">
         <!-- === Título y Selector de Cuenta === -->

@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Movimientos | Lintian Wallet</title>
+    <title data-tr="menuMovimientos"><?= tr('menuMovimientos') ?? 'Movimientos' ?> | Lintian Wallet</title>
     <link rel="icon" href="<?= base_url('img/logo.ico') ?>">
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 </head>
@@ -13,7 +13,7 @@
 
     <?= view('plantillas/p_menu.php') ?>
 
-    <!-- === Contenedor Principal === -->
+    <!-- === Vista de Movimientos: Listado detallado de ingresos y gastos === -->
     <main class="max-w-7xl mx-auto mt-10 px-4">
         <!-- Cabecera -->
         <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-10">

@@ -14,6 +14,9 @@ $m_base = "flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-
 $m_active = "text-purple-700 bg-purple-100 font-semibold shadow-sm translate-x-2 ring-1 ring-purple-200";
 $m_inactive = "text-gray-600 font-medium hover:bg-purple-50 hover:text-purple-600";
 ?>
+
+<!-- === Plantilla: Menú de Navegación Universal (Desktop & Mobile) === -->
+<!-- Incluye selector de idioma, perfil de usuario y enlaces a secciones principales -->
 <header class="sticky top-0 z-50 w-full bg-white border-b border-gray-200 shadow-sm">
     <nav class="w-full px-4 sm:px-6 lg:px-12">
         <div class="flex justify-between h-16 items-center">

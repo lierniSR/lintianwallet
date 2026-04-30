@@ -1,5 +1,9 @@
 /**
  * SCRIPT DE TRADUCCIÓN AUTOMÁTICA (Lintian Wallet)
+ * 
+ * Gestiona la carga de diccionarios JSON (ES/EU) y la traducción dinámica
+ * mediante Chrome AI (Translator API) para el resto de idiomas.
+ * Soporta [data-tr] para contenido y [data-tr-title] para tooltips/títulos.
  */
 
 let globalTranslatePage = null;
@@ -12,6 +16,7 @@ async function initTraductor() {
 
     let translations = null;
 
+    // Obtiene el diccionario desde el servidor (JsonController)
     async function cargarJSON() {
         try {
             const baseUrl = typeof LINTIAN_BASE_URL !== 'undefined' ? LINTIAN_BASE_URL : window.location.origin;

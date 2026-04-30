@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title data-tr="tituloConfiguracion"><?= tr("tituloConfiguracion") ?? 'Configuración' ?></title>
+    <title data-tr="tituloConfiguracion"><?= tr("tituloConfiguracion") ?? 'Configuración' ?> | Lintian Wallet</title>
     <link rel="icon" href="<?= base_url('img/logo.ico') ?>">
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 </head>
@@ -13,7 +13,7 @@
 
     <?= view('plantillas/p_menu.php') ?>
 
-    <!-- === Contenedor Principal === -->
+    <!-- === Vista de Configuración: Ajustes de cuenta, idioma y seguridad === -->
     <main class="max-w-4xl mx-auto mt-10 px-4">
         <div class="mb-10">
             <h1 class="text-4xl font-extrabold text-white tracking-tight" data-tr="tituloConfiguracion"><?= tr("tituloConfiguracion") ?? 'Configuración' ?></h1>
