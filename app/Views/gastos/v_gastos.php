@@ -135,7 +135,7 @@ $totalGastos = array_reduce($gastos ?? [], function ($carry, $item) {
                                         <!-- Formulario simulado para eliminar -->
                                         <form action="<?= base_url('gastos/eliminar') ?>" method="POST" class="m-0" onsubmit="return confirm('<?= tr('confirmEliminarGasto') ?? '¿Estás seguro de que quieres eliminar este gasto?' ?>');">
                                             <input type="hidden" name="id" value="<?= $gasto->id ?>">
-                                            <button type="submit" class="p-2 bg-black/20 text-white/40 hover:text-white hover:bg-red-500 rounded-full transition-all duration-300 opacity-50 group-hover:opacity-100" title="<?= tr('titleEliminarGasto') ?? 'Eliminar Gasto' ?>" data-tr="titleEliminarGasto">
+                                            <button type="submit" class="p-2 bg-black/20 text-white/40 hover:text-white hover:bg-red-500 rounded-full transition-all duration-300 opacity-50 group-hover:opacity-100" title="<?= tr('titleEliminarGasto') ?? 'Eliminar Gasto' ?>" data-tr-title="titleEliminarGasto">
                                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                                                 </svg>

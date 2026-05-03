@@ -65,8 +65,8 @@
                         <?php
                         $saldoActual = isset($cuenta->saldoTotal) ? $cuenta->saldoTotal : (isset($cuenta['saldoTotal']) ? $cuenta['saldoTotal'] : '');
                         ?>
-                        <input type="number" step="0.01" name="saldoTotal" id="saldoTotal" required
-                            class="w-full pl-10 pr-4 py-4 bg-white/10 border border-white/20 rounded-2xl text-white placeholder-white/30 focus:outline-none focus:ring-2 focus:ring-[#29C6AD]/50 focus:border-[#29C6AD] transition-all text-lg font-medium"
+                        <input type="number" step="0.01" name="saldoTotal" id="saldoTotal" readonly
+                            class="w-full pl-10 pr-4 py-4 bg-white/5 border border-white/10 rounded-2xl text-white/50 cursor-not-allowed focus:outline-none transition-all text-lg font-medium"
                             placeholder="<?= tr('placeholderSaldo') ?? '0,00' ?>" data-tr="placeholderSaldo" value="<?= esc($saldoActual) ?>">
                     </div>
                 </div>
@@ -87,11 +87,17 @@
                             <?php
                             $idCatActual = isset($cuenta->id_categoria) ? $cuenta->id_categoria : (isset($cuenta['id_categoria']) ? $cuenta['id_categoria'] : '');
                             ?>
-                            <?php foreach ($categorias as $categoria): ?>
-                                <option value="<?= $categoria->id ?>" <?= $categoria->id == $idCatActual ? 'selected' : '' ?> class="bg-purple-800 text-white">
-                                    <?= esc($categoria->nombre) ?>
-                                </option>
-                            <?php endforeach; ?>
+                            <?php if (!empty($categorias)): ?>
+                                <?php foreach ($categorias as $categoria): ?>
+                                    <?php
+                                    $catId = isset($categoria->id) ? $categoria->id : ($categoria['id'] ?? '');
+                                    $catNombre = isset($categoria->nombre) ? $categoria->nombre : ($categoria['nombre'] ?? '');
+                                    ?>
+                                    <option value="<?= esc($catId) ?>" <?= $catId == $idCatActual ? 'selected' : '' ?> class="bg-purple-800 text-white">
+                                        <?= esc($catNombre) ?>
+                                    </option>
+                                <?php endforeach; ?>
+                            <?php endif; ?>
                         </select>
                         <div class="absolute inset-y-0 right-0 pr-4 flex items-center pointer-events-none">
                             <svg class="w-5 h-5 text-white/50" fill="none" stroke="currentColor" viewBox="0 0 24 24">

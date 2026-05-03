@@ -1,5 +1,6 @@
 FROM php:8.2-apache
-# 1. Instalar dependencias del sistema y extensiones de PHP necesarias para CodeIgniter 4
+
+# 1. Instalar dependencias, extensiones y el servidor de MariaDB
 RUN apt-get update && apt-get install -y \
     libicu-dev \
     libpng-dev \
@@ -7,23 +8,39 @@ RUN apt-get update && apt-get install -y \
     zip \
     unzip \
     git \
+    mariadb-server \
     && docker-php-ext-install intl gd pdo_mysql mysqli zip opcache
-# 2. Instalar Composer desde la imagen oficial
+
+# 2. Configurar MariaDB (permitir que el servicio arranque en el contenedor)
+RUN mkdir -p /var/run/mysqld && chown mysql:mysql /var/run/mysqld
+
+# 3. Instalar Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
-# 3. Habilitar mod_rewrite de Apache para el enrutamiento de CodeIgniter
+
+# 4. Habilitar mod_rewrite
 RUN a2enmod rewrite
-# 4. Cambiar el DocumentRoot de Apache a la carpeta 'public' de CI4
+
+# 5. Configurar DocumentRoot
 ENV APACHE_DOCUMENT_ROOT /var/www/html/public
 RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-available/*.conf
 RUN sed -ri -e 's!/var/www/inc/!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/apache2.conf /etc/apache2/conf-available/*.conf
-# 5. Establecer el directorio de trabajo
+
+# 6. Directorio de trabajo
 WORKDIR /var/www/html
-# 6. Copiar los archivos del proyecto al contenedor
+
+# 7. Copiar archivos y el script de inicio
 COPY . .
-# 7. Instalar dependencias de PHP (esto crea la carpeta vendor que te falta)
-# Usamos --no-dev para producción y optimizamos el autoloader
+COPY entrypoint.sh /usr/local/bin/entrypoint.sh
+RUN chmod +x /usr/local/bin/entrypoint.sh
+
+# 8. Instalar dependencias de PHP
 RUN composer install --no-dev --optimize-autoloader --no-interaction
-# 8. Configurar permisos para la carpeta writable (fundamental para CI4)
+
+# 9. Permisos
 RUN chown -R www-data:www-data /var/www/html/writable
-# Exponer el puerto 80
+
+# Exponer puertos (solo el 80 para la web)
 EXPOSE 80
+
+# Usar el script de inicio para arrancar MariaDB y Apache
+ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]

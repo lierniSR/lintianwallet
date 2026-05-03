@@ -117,17 +117,17 @@
 
                         <!-- Botones de Acción (Overlay al hacer hover o click en móvil) -->
                         <div class="absolute inset-0 bg-black/40 backdrop-blur-[2px] opacity-0 group-hover:opacity-100 group-[.mobile-active]:opacity-100 transition-all duration-300 flex items-center justify-center gap-4 pointer-events-none group-hover:pointer-events-auto group-[.mobile-active]:pointer-events-auto">
-                            <!-- Icono: Tarjeta (Ver/Ocultar Categoria) -->
+                            <!-- Icono: Ojo (Ver/Ocultar Categoria) -->
                             <button title="<?= tr('titleOcultarCategoria') ?? 'Ver/Ocultar' ?>" data-tr-title="titleOcultarCategoria" class="toggle-number-btn p-3 bg-white/20 hover:bg-white/30 rounded-full text-white transition-all transform hover:scale-110">
-                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
-                                </svg>
-                            </button>
-                            <!-- Icono: Ojo (Ver Movimientos) - Como solicitó el usuario -->
-                            <button title="<?= tr('menuMovimientos') ?? 'Movimientos' ?>" data-tr-title="menuMovimientos" onclick="window.location.href='<?= base_url('movimientos?cuenta_id=' . $cuenta->id) ?>'" class="p-3 bg-white/20 hover:bg-white/30 rounded-full text-white transition-all transform hover:scale-110">
                                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                                </svg>
+                            </button>
+                            <!-- Icono: Movimientos (Consistent with menu) -->
+                            <button title="<?= tr('menuMovimientos') ?? 'Movimientos' ?>" data-tr-title="menuMovimientos" onclick="window.location.href='<?= base_url('movimientos?cuenta_id=' . $cuenta->id) ?>'" class="p-3 bg-white/20 hover:bg-white/30 rounded-full text-white transition-all transform hover:scale-110">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
                                 </svg>
                             </button>
                             <!-- Icono: Engranaje (Modificar Cuenta) - Corregido y completo -->

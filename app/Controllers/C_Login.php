@@ -58,7 +58,22 @@ class C_Login extends BaseController
         // Reglas estrictas: No dejamos que pongan información basura en la base de datos
         $rules = [
             'dni' => [
-                'rules'  => 'required|regex_match[/^[0-9]{8}[A-Z]$/]|is_unique[usuario.dni]',
+                'rules'  => [
+                    'required',
+                    'regex_match[/^[0-9]{8}[A-Z]$/]',
+                    'is_unique[usuario.dni]',
+                    static function ($value, array $data, ?string &$error = null): bool {
+                        $dni = strtoupper($value);
+                        $letra = substr($dni, -1);
+                        $numeros = substr($dni, 0, 8);
+                        if (!is_numeric($numeros)) return false;
+                        if (substr("TRWAGMYFPDXBNJZSQVHLCKE", $numeros % 23, 1) !== $letra) {
+                            $error = tr('La letra del DNI no es correcta.') ?? 'La letra del DNI no es correcta.';
+                            return false;
+                        }
+                        return true;
+                    },
+                ],
                 'errors' => [
                     'required'    => tr('El DNI es obligatorio.') ?? 'El DNI es obligatorio.',
                     'regex_match' => tr('El formato del DNI no es válido (ej. 12345678A).') ?? 'El formato del DNI no es válido (ej. 12345678A).',
@@ -80,17 +95,27 @@ class C_Login extends BaseController
                 ],
             ],
             'gmail' => [
-                'rules'  => 'required|valid_email',
+                'rules'  => 'required|valid_email|is_unique[usuario.gmail]',
                 'errors' => [
                     'required'    => tr('El correo es obligatorio.') ?? 'El correo es obligatorio.',
                     'valid_email' => tr('El formato del correo no es válido.') ?? 'El formato del correo no es válido.',
+                    'is_unique'   => tr('El correo ya está registrado.') ?? 'El correo ya está registrado.',
                 ],
             ],
             'contrasenia' => [
-                'rules'  => 'required|min_length[4]',
+                'rules'  => 'required|min_length[8]|regex_match[/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*(),.?":{}|<>]).*$/]',
                 'errors' => [
-                    'required'   => tr('La contraseña es obligatoria.') ?? 'La contraseña es obligatoria.',
-                    'min_length' => tr('La contraseña debe tener al menos 4 caracteres.') ?? 'La contraseña debe tener al menos 4 caracteres.',
+                    'required'    => tr('La contraseña es obligatoria.') ?? 'La contraseña es obligatoria.',
+                    'min_length'  => tr('La contraseña debe tener al menos 8 caracteres.') ?? 'La contraseña debe tener al menos 8 caracteres.',
+                    'regex_match' => tr('La contraseña debe incluir mayúsculas, minúsculas, números y caracteres especiales.') ?? 'La contraseña debe incluir mayúsculas, minúsculas, números y caracteres especiales.',
+                ],
+            ],
+            'fotoPerfil' => [
+                'rules'  => 'max_size[fotoPerfil,2048]|ext_in[fotoPerfil,png,jpg,jpeg]|is_image[fotoPerfil]',
+                'errors' => [
+                    'max_size' => tr('La foto es demasiado grande (máx 2MB).') ?? 'La foto es demasiado grande (máx 2MB).',
+                    'ext_in'   => tr('Solo se permiten imágenes PNG o JPG.') ?? 'Solo se permiten imágenes PNG o JPG.',
+                    'is_image' => tr('El archivo seleccionado no es una imagen válida.') ?? 'El archivo seleccionado no es una imagen válida.',
                 ],
             ],
         ];
