@@ -82,6 +82,7 @@
                             </svg>
                         </div>
                         <select name="id_categoria" id="id_categoria" required
+                            onchange="toggleOtraCategoria(this)"
                             class="w-full pl-11 pr-10 py-4 bg-white/10 border border-white/20 rounded-2xl text-white appearance-none focus:outline-none focus:ring-2 focus:ring-[#29C6AD]/50 focus:border-[#29C6AD] transition-all font-medium cursor-pointer">
                             <option value="" disabled class="bg-purple-800 text-white" data-tr="opcionSeleccionCategoria"><?= tr('opcionSeleccionCategoria') ?? 'Selecciona una categoría' ?></option>
                             <?php
@@ -98,12 +99,28 @@
                                     </option>
                                 <?php endforeach; ?>
                             <?php endif; ?>
+                            <option value="otro" class="bg-purple-800 text-white" data-tr="opcionOtro"><?= tr('opcionOtro') ?? 'Otro...' ?></option>
                         </select>
                         <div class="absolute inset-y-0 right-0 pr-4 flex items-center pointer-events-none">
                             <svg class="w-5 h-5 text-white/50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
                             </svg>
                         </div>
+                    </div>
+
+                    <!-- Campo de texto que aparece solo si elige 'Otro' -->
+                    <div id="wrapper_nueva_categoria" class="hidden mt-3">
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                                <svg class="w-5 h-5 text-yellow-400/70" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                                </svg>
+                            </div>
+                            <input type="text" name="nueva_categoria" id="nueva_categoria"
+                                placeholder="<?= tr('placeholderNuevaCategoria') ?? 'Nombre de la nueva categoría...' ?>" data-tr="placeholderNuevaCategoria"
+                                class="w-full pl-11 pr-4 py-3 bg-yellow-400/10 border border-yellow-400/40 rounded-2xl text-white placeholder-white/30 focus:outline-none focus:ring-2 focus:ring-yellow-400/50 focus:border-yellow-400 transition-all font-medium">
+                        </div>
+                        <p class="text-yellow-300/70 text-xs mt-1.5 ml-1" data-tr="descNuevaCategoria"><?= tr('descNuevaCategoria') ?? 'Se creará automáticamente una nueva categoría con ese nombre.' ?></p>
                     </div>
                 </div>
 
@@ -137,6 +154,21 @@
         </div>
     </main>
 
+<script>
+    function toggleOtraCategoria(select) {
+        const wrapper = document.getElementById('wrapper_nueva_categoria');
+        const input   = document.getElementById('nueva_categoria');
+        if (select.value === 'otro') {
+            wrapper.classList.remove('hidden');
+            input.required = true;
+            input.focus();
+        } else {
+            wrapper.classList.add('hidden');
+            input.required = false;
+            input.value = '';
+        }
+    }
+</script>
 </body>
 
 </html>

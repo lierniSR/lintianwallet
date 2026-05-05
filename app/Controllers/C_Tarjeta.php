@@ -172,6 +172,27 @@ class C_Tarjeta extends BaseController
         // ¿Nos está mandando ya las cosas salvadas clickeando en Guardar? (eso es un post)
         if (strtolower($this->request->getMethod()) === 'post') {
             
+            // Si el usuario eligió "Otro...", creamos o reutilizamos la categoría al vuelo
+            $id_categoria_final = null;
+
+            if ($this->request->getPost('id_categoria') === 'otro') {
+                $nombreNuevo = trim($this->request->getPost('nueva_categoria') ?? '');
+
+                if (empty($nombreNuevo)) {
+                    return redirect()->back()->withInput()->with('errors', ['id_categoria' => tr('errorSubcategoriaObligatoria') ?? 'Debes escribir un nombre para la nueva categoría.']);
+                }
+
+                // Si ya existe una categoría con ese nombre, reutilizamos su ID
+                $existente = $this->modeloCategorias->where('nombre', $nombreNuevo)->first();
+                if ($existente) {
+                    $id_categoria_final = $existente->id;
+                } else {
+                    // La creamos nueva y guardamos el ID devuelto
+                    $this->modeloCategorias->insert(['nombre' => $nombreNuevo]);
+                    $id_categoria_final = $this->modeloCategorias->insertID();
+                }
+            }
+
             // Reglas protectoras
             $rules = [
                 'saldoTotal' => [
@@ -181,21 +202,26 @@ class C_Tarjeta extends BaseController
                         'greater_than_equal_to' => tr('errorSaldoMinimo') ?? 'El saldo debe ser de al menos 0.01€.',
                     ],
                 ],
-                'id_categoria' => [
+            ];
+
+            // Solo validamos id_categoria si NO acabamos de crearla
+            if ($id_categoria_final === null) {
+                $rules['id_categoria'] = [
                     'rules'  => 'required|is_not_unique[categoria.id]',
                     'errors' => [
                         'required'      => tr('errorSeleccionarCategoria') ?? 'Debes seleccionar una categoría.',
                         'is_not_unique' => tr('errorCategoriaInvalida') ?? 'La categoría seleccionada no es válida.',
                     ],
-                ],
-            ];
+                ];
+            }
 
             // Comprobación de reglas
             if (!$this->validate($rules)) {
                 return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
             }
 
-            $id_categoria = $this->request->getPost('id_categoria');
+            // Usamos el ID definitivo: el de la nueva categoría, o el del select
+            $id_categoria = $id_categoria_final ?? $this->request->getPost('id_categoria');
 
             // Comprobación rarita pero clave: Asegurarnos de que no machaca otra cuenta poniéndole la categoría de la cuenta 2 a la cuenta 1
             $existe = $this->modeloCuentas->where('id_usuario', $dni)
